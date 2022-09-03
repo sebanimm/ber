@@ -64,29 +64,20 @@ function App() {
   const [lunchInfo, setLunchInfo] = useState([]);
   const [dinnerInfo, setDinnerInfo] = useState([]);
 
+  /** 급식 정보가 없을 경우 기본값 출력 -> json파일이 급식 정보가 없을 때 경로가 바뀌는 것 때문에 못함*/
+  /** 괄호 제거 -> 정규식 만들고 설정까지 했는데 먹지를 않음*/
+
   const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_YMD=${currentDate}`;
-  const getBreakfastInfo = () => {
+  const getBobInfo = () => {
     axios.get(URL).then((res) => {
       const breakfast =
-        res.data.mealServiceDietInfo[1].row[0].DDISH_NM.replaceAll("<br/>", "");
+        res.data.mealServiceDietInfo[1].row[0].DDISH_NM.replaceAll("<br/>");
       setBreakfastInfo(breakfast);
-    });
-  };
-  const getLunchInfo = () => {
-    axios.get(URL).then((res) => {
-      const lunch = res.data.mealServiceDietInfo[1].row[1].DDISH_NM.replaceAll(
-        "<br/>",
-        ""
-      );
+      const lunch =
+        res.data.mealServiceDietInfo[1].row[1].DDISH_NM.replaceAll("<br/>");
       setLunchInfo(lunch);
-    });
-  };
-  const getDinnerInfo = () => {
-    axios.get(URL).then((res) => {
-      const dinner = res.data.mealServiceDietInfo[1].row[2].DDISH_NM.replaceAll(
-        "<br/>",
-        ""
-      );
+      const dinner =
+        res.data.mealServiceDietInfo[1].row[2].DDISH_NM.replaceAll("<br/>");
       setDinnerInfo(dinner);
     });
   };
@@ -94,9 +85,7 @@ function App() {
   let nowUrl = window.location.pathname;
 
   useEffect(() => {
-    getBreakfastInfo();
-    getLunchInfo();
-    getDinnerInfo();
+    getBobInfo();
   }, [nowUrl]);
 
   return (
@@ -111,7 +100,7 @@ function App() {
             <SecondCircle />
             <ThirdCircle />
           </BobHeader>
-          {breakfastInfo}
+          <p>{breakfastInfo}</p>
         </BssmBob>
         <BssmBob>
           <BobHeader>
@@ -119,7 +108,7 @@ function App() {
             <SecondCircle />
             <ThirdCircle />
           </BobHeader>
-          {lunchInfo}
+          <p>{lunchInfo}</p>
         </BssmBob>
         <BssmBob>
           <BobHeader>
@@ -127,7 +116,7 @@ function App() {
             <SecondCircle />
             <ThirdCircle />
           </BobHeader>
-          {dinnerInfo}
+          <p>{dinnerInfo}</p>
         </BssmBob>
       </div>
     </Container>
