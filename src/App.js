@@ -1,91 +1,17 @@
-import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import GlobalFonts from "./fonts/fonts";
-import "./App.css";
-
-const Container = styled.div`
-  height: fit-content;
-  background-color: white;
-  margin: 0;
-  padding: 0;
-`;
-
-const TodaysDate = styled.p`
-  padding: 15vh 0;
-  margin: 0;
-  height: 10vh;
-  text-align: center;
-  font-family: "nanum";
-  font-weight: bolder;
-  font-size: 50px;
-`;
-
-const Bob = styled.div`
-  width: 300px;
-  height: 300px;
-  background: #d8e9d8;
-  box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  position: relative;
-  text-align: center;
-`;
-
-const BobTime = styled.p`
-  font-size: 30px;
-  font-family: "nanum";
-  margin-bottom: 2vh;
-  font-weight: bold;
-`;
-
-const BobHeader = styled.div`
-  background-color: white;
-  height: 30px;
-  width: 300px;
-  position: absolute;
-  top: 0px;
-  border-radius: 10px 10px 0px 0px;
-`;
-
-const FirstCircle = styled.div`
-  position: absolute;
-  top: 9px;
-  background-color: #f05f5f;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-left: 10px;
-`;
-
-const SecondCircle = styled(FirstCircle)`
-  background-color: #ffb800;
-  margin-left: 30px;
-`;
-
-const ThirdCircle = styled(FirstCircle)`
-  background-color: #8ed682;
-  margin-left: 50px;
-`;
-
-const CalInfo = styled.p`
-  font-family: "GmarketSansMedium";
-  height: 100%;
-  color: #4d5e4d;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const BobInfo = styled.div`
-  display: flex;
-  white-space: pre-wrap;
-  line-height: 150%;
-  font-size: 20px;
-  font-family: "nanum";
-  height: 300px;
-  flex-direction: column;
-  justify-content: center;
-`;
+import Container from "./styles/Container.js";
+import TodaysDate from "./styles/TodaysDate.js";
+import BobTime from "./styles/BobTime.js";
+import Bob from "./styles/Bob.js";
+import BobHeader from "./styles/BobHeader.js";
+import BobInfo from "./styles/BobInfo.js";
+import CalInfo from "./styles/CalInfo.js";
+import FirstCircle from "./styles/FirstCircle.js";
+import SecondCircle from "./styles/SecondCircle.js";
+import ThirdCircle from "./styles/ThirdCircle.js";
+import "./styles/App.css";
 
 function App() {
   const date = new Date();
