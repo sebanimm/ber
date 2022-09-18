@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BobInfo = styled.div`
+const BobInfoMain = styled.div`
 	display: flex;
 	white-space: pre-wrap;
 	line-height: 150%;
@@ -12,4 +12,4 @@ const BobInfo = styled.div`
 	color: white;
 `;
 
-export default BobInfo;
+export default BobInfoMain;

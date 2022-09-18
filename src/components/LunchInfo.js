@@ -1,13 +1,13 @@
-import BobTime from "../styles/BobTime.js";
+import BobTimeMain from "../styles/BobTimeMain.js";
 import Bob from "./Bob";
 
 const LunchInfo = ({ date }) => {
-  return (
-    <div>
-      <BobTime>점심</BobTime>
-      <Bob id="1" date={date} />
-    </div>
-  );
+	return (
+		<div>
+			<BobTimeMain>점심</BobTimeMain>
+			<Bob id="1" date={date} />
+		</div>
+	);
 };
 
 export default LunchInfo;

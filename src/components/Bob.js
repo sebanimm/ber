@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import BobHeader from "../styles/BobHeader.js";
-import BobInfo from "../styles/BobInfo.js";
+import BobInfoMain from "../styles/BobInfoMain.js";
 import CalInfo from "../styles/CalInfo.js";
 import FirstCircle from "../styles/FirstCircle.js";
 import SecondCircle from "../styles/SecondCircle.js";
@@ -77,7 +77,7 @@ const Bob = ({ id, date }) => {
 					{bobCalInfo}
 				</CalInfo>
 			</BobHeader>
-			<BobInfo>{bobInfo}</BobInfo>
+			<BobInfoMain>{bobInfo}</BobInfoMain>
 		</BobWrapper>
 	);
 };

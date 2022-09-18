@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const BobHeader = styled.div`
 	background-color: white;
-	height: 30px;
+	height: 10%;
 	width: 100%;
 	position: absolute;
 	top: 0px;
