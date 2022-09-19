@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BobHeader = styled.div`
+const MealHeader = styled.div`
 	background-color: white;
 	height: 10%;
 	width: 100%;
@@ -9,4 +9,4 @@ const BobHeader = styled.div`
 	border-radius: 10px 10px 0px 0px;
 `;
 
-export default BobHeader;
+export default MealHeader;

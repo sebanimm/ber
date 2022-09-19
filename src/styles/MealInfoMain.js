@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
-const BobInfoMain = styled.div`
+const MealInfoMain = styled.div`
 	display: flex;
 	white-space: pre-wrap;
 	line-height: 150%;
 	font-size: 20px;
 	font-family: "nanum";
-	height: 100%;
+	height: 90%;
 	flex-direction: column;
 	justify-content: center;
 	color: white;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
 `;
 
-export default BobInfoMain;
+export default MealInfoMain;

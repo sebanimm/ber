@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MonthlyBobInfoBtn = styled.button`
+const MonthlyMealInfoBtn = styled.button`
 	color: black;
 	width: 200px;
 	height: 50px;
@@ -15,4 +15,4 @@ const MonthlyBobInfoBtn = styled.button`
 	background-color: #d9d9d9;
 `;
 
-export default MonthlyBobInfoBtn;
+export default MonthlyMealInfoBtn;

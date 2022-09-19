@@ -1,11 +1,11 @@
-import BobTimeMain from "../styles/BobTimeMain.js";
-import Bob from "./Bob";
+import MealTimeMain from "../styles/MealTimeMain.js";
+import Meal from "./Meal";
 
 const LunchInfo = ({ date }) => {
 	return (
 		<div>
-			<BobTimeMain>점심</BobTimeMain>
-			<Bob id="1" date={date} />
+			<MealTimeMain>점심</MealTimeMain>
+			<Meal id="1" date={date} />
 		</div>
 	);
 };
