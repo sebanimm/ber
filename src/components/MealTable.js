@@ -126,7 +126,7 @@ const Stepper = styled.div`
 	transform: translate(-175%, -50%);
 `;
 
-const MealTable = ({ year, month, currentMonth }) => {
+const MealTable = ({ year, month, URL }) => {
 	const [count, setCount] = useState(1);
 
 	const decreaseCount = () => {

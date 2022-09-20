@@ -13,8 +13,6 @@ const App = () => {
 	const currentMonth = currentDate.substring(0, 6);
 	const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
 	const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_YMD=${currentMonth}`;
-	const firstRegex = /<br\/>|\([^\)]*\)/g;
-	const secondRegex = /\s{2}/g;
 
 	return (
 		<Router>
@@ -27,19 +25,12 @@ const App = () => {
 							day={day}
 							dayOfTheWeek={dayOfTheWeek}
 							currentDate={currentDate}
-							currentMonth={currentMonth}
 						/>
 					}
 				/>
 				<Route
 					path="/monthlyMeal/:currenMonth"
-					element={
-						<MonthlyMealInfo
-							year={year}
-							month={month}
-							currentMonth={currentMonth}
-						/>
-					}
+					element={<MonthlyMealInfo year={year} month={month} URL={URL} />}
 				/>
 			</Routes>
 		</Router>
