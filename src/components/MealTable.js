@@ -93,9 +93,11 @@ const IncreaseBtn = styled.button`
 	color: white;
 	align-items: center;
 	justify-content: center;
-	background: ${(props) => (props.count === 5 ? "none" : "black")};
-	border: ${(props) => (props.count === 5 ? "none" : "black")};
-	pointer-events: ${(props) => (props.count === 5 ? "none" : "black")};
+	background: ${(props) =>
+		props.count === props.weekCount ? "none" : "black"};
+	border: ${(props) => (props.count === props.weekCount ? "none" : "black")};
+	pointer-events: ${(props) =>
+		props.count === props.weekCount ? "none" : "black"};
 `;
 
 const DecreaseBtn = styled.button`
@@ -127,6 +129,11 @@ const Stepper = styled.div`
 `;
 
 const MealTable = ({ year, month, URL }) => {
+	const nowDate = new Date(year, month - 1, 1);
+	const lastDate = new Date(year, month, 0).getDate();
+	const monthSWeek = nowDate.getDay();
+	const weekCount = parseInt((parseInt(lastDate) + monthSWeek - 1) / 7) + 1;
+
 	const [count, setCount] = useState(1);
 
 	const decreaseCount = () => {
@@ -150,11 +157,11 @@ const MealTable = ({ year, month, URL }) => {
 				<p>금</p>
 			</Days>
 			<Dates>
-				<p>{month}월 일</p>
-				<p>{month}월 일</p>
-				<p>{month}월 일</p>
-				<p>{month}월 일</p>
-				<p>{month}월 일</p>
+				<p>ㅤ</p>
+				<p>ㅤ</p>
+				<p>ㅤ</p>
+				<p>ㅤ</p>
+				<p>ㅤ</p>
 			</Dates>
 			<div style={{ position: "relative" }}>
 				<Stepper>
@@ -162,7 +169,11 @@ const MealTable = ({ year, month, URL }) => {
 						<FontAwesomeIcon icon={faArrowUp} style={{ color: "#FFF" }} />
 					</DecreaseBtn>
 					<p>{count}주차</p>
-					<IncreaseBtn onClick={increaseCount} count={count}>
+					<IncreaseBtn
+						onClick={increaseCount}
+						count={count}
+						weekCount={weekCount}
+					>
 						<FontAwesomeIcon icon={faArrowDown} style={{ color: "#FFF" }} />
 					</IncreaseBtn>
 				</Stepper>
