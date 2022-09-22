@@ -128,11 +128,23 @@ const Stepper = styled.div`
 	transform: translate(-175%, -50%);
 `;
 
-const MealTable = ({ year, month, URL }) => {
+const MealTable = ({ year, month }) => {
 	const nowDate = new Date(year, month - 1, 1);
 	const lastDate = new Date(year, month, 0).getDate();
 	const monthSWeek = nowDate.getDay();
 	const weekCount = parseInt((parseInt(lastDate) + monthSWeek - 1) / 7) + 1;
+
+	const currentMonth = [];
+
+	for (let i = 0; i < lastDate; i++) {
+		const date = new Date(year, month, i + 1);
+		const day = String(date.getDate()).padStart(2, "0");
+		currentMonth[i] = `${year}${month}${day}`;
+	}
+
+	console.log(currentMonth);
+	const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
+	const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_YMD=${Date}}`;
 
 	const [count, setCount] = useState(1);
 
