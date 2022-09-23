@@ -134,15 +134,19 @@ const MealTable = ({ year, month }) => {
 	const monthSWeek = nowDate.getDay();
 	const weekCount = parseInt((parseInt(lastDate) + monthSWeek - 1) / 7) + 1;
 
-	const currentMonth = [];
+	const currentDays = [];
 
-	for (let i = 0; i < lastDate; i++) {
-		const date = new Date(year, month, i + 1);
-		const day = String(date.getDate()).padStart(2, "0");
-		currentMonth[i] = `${year}${month}${day}`;
+	for (let i = 0, j = 0; i < lastDate; i++) {
+		const date = new Date(year, month - 1, i + 1);
+		const dayOfTheWeek = date.getDay();
+		if (dayOfTheWeek >= 1 && dayOfTheWeek <= 5) {
+			const day = String(date.getDate()).padStart(2, "0");
+			currentDays[j] = `${year}${month}${day}`;
+			j += 1;
+		}
 	}
 
-	console.log(currentMonth);
+	console.log(currentDays);
 	const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
 	const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_YMD=${Date}}`;
 
@@ -169,11 +173,11 @@ const MealTable = ({ year, month }) => {
 				<p>금</p>
 			</Days>
 			<Dates>
-				<p>ㅤ</p>
-				<p>ㅤ</p>
-				<p>ㅤ</p>
-				<p>ㅤ</p>
-				<p>ㅤ</p>
+				<p>1</p>
+				<p>1</p>
+				<p>1</p>
+				<p>1</p>
+				<p>1</p>
 			</Dates>
 			<div style={{ position: "relative" }}>
 				<Stepper>
@@ -193,122 +197,77 @@ const MealTable = ({ year, month }) => {
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 							<HorizontalLine />
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 							<HorizontalLine />
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>
-								돼지국밥{"\n"}밀면{"\n"}멸치볶음{"\n"}된장찌개{"\n"}
-								배추김치{"\n"}햇반{"\n"}파인애플피자
-							</MealInfo>
+							<MealInfo>돼지국밥{"\n"}</MealInfo>
 						</Box>
 					</Column>
 				</Table>
