@@ -28,7 +28,7 @@ const Meal = ({ id, date }) => {
 	const getMealApi = () => {
 		const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
 		const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_YMD=${date}`;
-		const firstRegex = /<br\/>|\([^\)]*\)/g;
+		const firstRegex = /<br\/>|\([\S]+[^\s]|\([^)]*\)/g;
 		const secondRegex = /\s{2}/g;
 		axios.get(URL).then((res) => {
 			const data = res.data.mealServiceDietInfo[1].row;

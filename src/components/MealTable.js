@@ -6,6 +6,7 @@ import TodaysDateMain from "../styles/TodaysDateMain";
 import { React, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 const Table = styled.div`
 	width: 76vw;
@@ -131,24 +132,47 @@ const Stepper = styled.div`
 const MealTable = ({ year, month }) => {
 	const nowDate = new Date(year, month - 1, 1);
 	const lastDate = new Date(year, month, 0).getDate();
+	console.log(nowDate, lastDate);
 	const monthSWeek = nowDate.getDay();
 	const weekCount = parseInt((parseInt(lastDate) + monthSWeek - 1) / 7) + 1;
+	const startOfMonth = `${year}${month.padStart(2, "0")}01`;
+	const endOfMonth = `${year}${month.padStart(2, "0")}${lastDate}`;
 
-	const currentDays = [];
-
-	for (let i = 0, j = 0; i < lastDate; i++) {
-		const date = new Date(year, month - 1, i + 1);
-		const dayOfTheWeek = date.getDay();
-		if (dayOfTheWeek >= 1 && dayOfTheWeek <= 5) {
-			const day = String(date.getDate()).padStart(2, "0");
-			currentDays[j] = `${year}${month}${day}`;
-			j += 1;
-		}
-	}
-
-	console.log(currentDays);
 	const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
-	const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_YMD=${Date}}`;
+	const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_FROM_YMD=${startOfMonth}&MLSV_TO_YMD=${endOfMonth}`;
+	const mealDates = [];
+	const meals = [];
+	const firstRegex = /<br\/>|\(([^(]+\d{0,15})\)|\([\S]+[^\s]/g;
+	const secondRegex = /\s{2}/g;
+	const week = [[1], [2], [3], [4], [5]];
+
+	console.log(endOfMonth);
+	console.log(URL);
+
+	axios.get(URL).then((res) => {
+		const data = res.data.mealServiceDietInfo[1].row;
+		for (let i of data) {
+			const mealDate = i.MLSV_YMD;
+			const mealInfo = i.DDISH_NM.replace(firstRegex, "").replace(
+				secondRegex,
+				"\n"
+			);
+			console.log(mealDate);
+			console.log(mealInfo);
+			let dateIndex = mealDates.indexOf(mealDate);
+
+			if (dateIndex === -1) {
+				mealDates.push(mealDate);
+			}
+
+			dateIndex = mealDates.indexOf(mealDate);
+			if (meals[dateIndex] === undefined) {
+				meals[dateIndex] = mealInfo;
+			} else {
+				meals[dateIndex] += `\n ${mealInfo}`;
+			}
+		}
+	});
 
 	const [count, setCount] = useState(1);
 
