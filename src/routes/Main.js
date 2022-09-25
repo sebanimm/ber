@@ -8,7 +8,16 @@ import LunchInfo from "../components/LunchInfo";
 import DinnerInfo from "../components/DinnerInfo";
 import { Link } from "react-router-dom";
 
-const Main = ({ day, month, dayOfTheWeek, currentDate, currentMonth }) => {
+const Main = ({
+	day,
+	month,
+	dayOfTheWeek,
+	currentDate,
+	currentMonth,
+	KEY,
+	firstRegex,
+	secondRegex,
+}) => {
 	return (
 		<Container>
 			<GlobalFonts />
@@ -19,9 +28,24 @@ const Main = ({ day, month, dayOfTheWeek, currentDate, currentMonth }) => {
 				{month}월 {day}일 {dayOfTheWeek}요일
 			</TodaysDateMain>
 			<div className="App">
-				<BreakfastInfo date={currentDate} />
-				<LunchInfo date={currentDate} />
-				<DinnerInfo date={currentDate} />
+				<BreakfastInfo
+					date={currentDate}
+					KEY={KEY}
+					firstRegex={firstRegex}
+					secondRegex={secondRegex}
+				/>
+				<LunchInfo
+					date={currentDate}
+					KEY={KEY}
+					firstRegex={firstRegex}
+					secondRegex={secondRegex}
+				/>
+				<DinnerInfo
+					date={currentDate}
+					KEY={KEY}
+					firstRegex={firstRegex}
+					secondRegex={secondRegex}
+				/>
 			</div>
 		</Container>
 	);

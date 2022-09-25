@@ -129,36 +129,27 @@ const Stepper = styled.div`
 	transform: translate(-175%, -50%);
 `;
 
-const MealTable = ({ year, month }) => {
+const MealTable = ({ year, month, KEY, firstRegex, secondRegex }) => {
 	const nowDate = new Date(year, month - 1, 1);
-	const lastDate = new Date(year, month, 0).getDate();
-	console.log(nowDate, lastDate);
+	const lastDay = new Date(year, month, 0).getDate();
 	const monthSWeek = nowDate.getDay();
-	const weekCount = parseInt((parseInt(lastDate) + monthSWeek - 1) / 7) + 1;
+	const weekCount = parseInt((lastDay + monthSWeek - 1) / 7) + 1;
 	const startOfMonth = `${year}${month.padStart(2, "0")}01`;
-	const endOfMonth = `${year}${month.padStart(2, "0")}${lastDate}`;
+	const endOfMonth = `${year}${month.padStart(2, "0")}${lastDay}`;
 
-	const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
 	const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_FROM_YMD=${startOfMonth}&MLSV_TO_YMD=${endOfMonth}`;
 	const mealDates = [];
 	const meals = [];
-	const firstRegex = /<br\/>|\(([^(]+\d{0,15})\)|\([\S]+[^\s]/g;
-	const secondRegex = /\s{2}/g;
 	const week = [[1], [2], [3], [4], [5]];
 
-	console.log(endOfMonth);
-	console.log(URL);
-
 	axios.get(URL).then((res) => {
-		const data = res.data.mealServiceDietInfo[1].row;
-		for (let i of data) {
-			const mealDate = i.MLSV_YMD;
-			const mealInfo = i.DDISH_NM.replace(firstRegex, "").replace(
+		const datas = res.data.mealServiceDietInfo[1].row;
+		for (let data of datas) {
+			const mealDate = data.MLSV_YMD;
+			const mealInfo = data.DDISH_NM.replace(firstRegex, "").replace(
 				secondRegex,
 				"\n"
 			);
-			console.log(mealDate);
-			console.log(mealInfo);
 			let dateIndex = mealDates.indexOf(mealDate);
 
 			if (dateIndex === -1) {
@@ -166,10 +157,13 @@ const MealTable = ({ year, month }) => {
 			}
 
 			dateIndex = mealDates.indexOf(mealDate);
+			console.log(mealDate);
+			console.log(dateIndex);
+
 			if (meals[dateIndex] === undefined) {
 				meals[dateIndex] = mealInfo;
 			} else {
-				meals[dateIndex] += `\n ${mealInfo}`;
+				meals[dateIndex] += `${mealInfo}`;
 			}
 		}
 	});
