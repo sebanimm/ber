@@ -11,9 +11,6 @@ const App = () => {
 	const dayOfTheWeek = week[new Date(year, month - 1, day).getDay()];
 	const currentDate = `${year}${month.padStart(2, "0")}${day.padStart(2, "0")}`;
 	const currentMonth = currentDate.substring(0, 6);
-	const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
-	const firstRegex = /<br\/>|\(([^(]+\d{0,15})\)|\([\S]+[^\s]/g;
-	const secondRegex = /\s{2}/g;
 
 	return (
 		<Router>
@@ -27,23 +24,12 @@ const App = () => {
 							dayOfTheWeek={dayOfTheWeek}
 							currentDate={currentDate}
 							currentMonth={currentMonth}
-							KEY={KEY}
-							firstRegex={firstRegex}
-							secondRegex={secondRegex}
 						/>
 					}
 				/>
 				<Route
 					path="/monthlyMeal/:currenMonth"
-					element={
-						<MonthlyMealInfo
-							year={year}
-							month={month}
-							KEY={KEY}
-							firstRegex={firstRegex}
-							secondRegex={secondRegex}
-						/>
-					}
+					element={<MonthlyMealInfo year={year} month={month} />}
 				/>
 			</Routes>
 		</Router>
