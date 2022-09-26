@@ -1,55 +1,18 @@
 import Container from "../styles/Container";
 import styled from "styled-components";
-import MealTimeMain from "../styles/MealTimeMain";
-import MealInfoMain from "../styles/MealInfoMain";
-import TodaysDateMain from "../styles/TodaysDateMain";
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useEffect } from "react";
-
-const Table = styled.div`
-	width: 76vw;
-	min-height: 450px;
-	display: flex;
-	margin: 0 12vw;
-	flex-wrap: wrap;
-	background-color: black;
-	justify-content: space-evenly;
-	align-items: center;
-	border-radius: 50px;
-	position: relative;
-`;
-
-const Column = styled.div`
-	width: 17%;
-	height: 65vh;
-	color: white;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-`;
-
-const Box = styled.div`
-	height: 30%;
-`;
-
-const MealTime = styled(MealTimeMain)`
-	margin-bottom: 7%;
-	font-size: 20px;
-	height: 16%;
-`;
-
-const MealInfo = styled(MealInfoMain)`
-	height: 77%;
-	font-size: 12px;
-	line-height: 120%;
-	display: block;
-	bottom: 0;
-	position: relative;
-`;
+import Table from "../styles/Table";
+import Column from "../styles/Column";
+import Box from "../styles/Box";
+import MealTime from "../styles/MealTime";
+import MealInfo from "../styles/MealInfo";
+import Stepper from "../styles/Stepper";
+import TodaysDate from "../styles/TodaysDate";
+import Dates from "../styles/Dates";
+import Days from "../styles/Days";
 
 const VerticalLine = styled.div`
 	border: 2px solid white;
@@ -68,68 +31,6 @@ const HorizontalLine = styled(VerticalLine)`
 	transform: translate(-41.18%);
 `;
 
-const TodaysDate = styled(TodaysDateMain)`
-	padding: 0;
-`;
-
-const Days = styled.h1`
-	color: black;
-	display: flex;
-	width: 76vw;
-	justify-content: space-around;
-	margin: 0 12vw;
-	padding-top: 50px;
-`;
-
-const Dates = styled(Days)`
-	padding-top: 0;
-`;
-
-const IncreaseBtn = styled.button`
-	display: flex;
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	font-size: 26px;
-	background-color: black;
-	color: white;
-	align-items: center;
-	justify-content: center;
-	background: ${(props) =>
-		props.count === props.weekCount ? "none" : "black"};
-	border: ${(props) => (props.count === props.weekCount ? "none" : "black")};
-	pointer-events: ${(props) =>
-		props.count === props.weekCount ? "none" : "black"};
-`;
-
-const DecreaseBtn = styled.button`
-	display: flex;
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	font-size: 26px;
-	background-color: black;
-	color: white;
-	align-items: center;
-	justify-content: center;
-	background: ${(props) => (props.count === 1 ? "none" : "black")};
-	border: ${(props) => (props.count === 1 ? "none" : "black")};
-	pointer-events: ${(props) => (props.count === 1 ? "none" : "black")};
-`;
-
-const Stepper = styled.div`
-	position: absolute;
-	display: flex;
-	width: 50px;
-	height: 150px;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	top: 50%;
-	left: 10%;
-	transform: translate(-175%, -50%);
-`;
-
 const MealTable = ({ year, month }) => {
 	const [count, setCount] = useState(1);
 
@@ -141,9 +42,9 @@ const MealTable = ({ year, month }) => {
 		setCount(count + 1);
 	};
 
-	const [monthlyBreakfast, setMonthlyBreakfast] = useState([]);
-	const [monthlyLunch, setMonthlyLunch] = useState([]);
-	const [monthlyDinner, setMonthlyDinner] = useState([]);
+	const [monthlyBreakfast, setMonthlyBreakfast] = useState("");
+	const [monthlyLunch, setMonthlyLunch] = useState("");
+	const [monthlyDinner, setMonthlyDinner] = useState("");
 	const firstDate = new Date(year, month - 1, 1);
 	const lastDay = new Date(year, month, 0).getDate();
 	const monthSWeek = firstDate.getDay();
@@ -199,7 +100,6 @@ const MealTable = ({ year, month }) => {
 	useEffect(() => {
 		getMonthlyMealsApi();
 	}, []);
-	console.log(breakfasts && breakfasts[0]);
 
 	return (
 		<Container>
@@ -316,5 +216,37 @@ const MealTable = ({ year, month }) => {
 		</Container>
 	);
 };
+
+const IncreaseBtn = styled.button`
+	display: flex;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	font-size: 26px;
+	background-color: black;
+	color: white;
+	align-items: center;
+	justify-content: center;
+	background: ${(props) =>
+		props.count === props.weekCount ? "none" : "black"};
+	border: ${(props) => (props.count === props.weekCount ? "none" : "black")};
+	pointer-events: ${(props) =>
+		props.count === props.weekCount ? "none" : "black"};
+`;
+
+const DecreaseBtn = styled.button`
+	display: flex;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	font-size: 26px;
+	background-color: black;
+	color: white;
+	align-items: center;
+	justify-content: center;
+	background: ${(props) => (props.count === 1 ? "none" : "black")};
+	border: ${(props) => (props.count === 1 ? "none" : "black")};
+	pointer-events: ${(props) => (props.count === 1 ? "none" : "black")};
+`;
 
 export default MealTable;
