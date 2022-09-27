@@ -49,14 +49,8 @@ const MealTable = ({ year, month }) => {
 	const date = new Date(year, month - 1, firstDay);
 	const currentDate = getMondayDate(date);
 
-	const getDays = [];
-
 	for (let i = 1; i < 6; i++) {
 		const date = new Date(year, month - 1, currentDate - 1 + i);
-		const day = date.getDay();
-		if (day >= 1 && day <= 5) {
-			getDays[day] = date;
-		}
 		const currentYear = date.getFullYear();
 		months[i - 1] = String(date.getMonth() + 1);
 		const currentMonth = months[i - 1].padStart(2, "0");
@@ -65,9 +59,9 @@ const MealTable = ({ year, month }) => {
 		currentWeek[i - 1] = `${currentYear}${currentMonth}${currentDay}`;
 	}
 
-	const [breakfast, setBreakfast] = useState([]);
-	const [lunch, setLunch] = useState([]);
-	const [dinner, setDinner] = useState([]);
+	let [breakfast, setBreakfast] = useState([]);
+	let [lunch, setLunch] = useState([]);
+	let [dinner, setDinner] = useState([]);
 
 	const getMonthlyMealsApi = () => {
 		const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
@@ -83,28 +77,30 @@ const MealTable = ({ year, month }) => {
 				const mealDateMonth = mealDate.substring(4, 6);
 				const mealDateDay = mealDate.substring(6, 8);
 				const currentMealDate = `${mealDateYear}-${mealDateMonth}-${mealDateDay}`;
-				const mealDay = new Date(currentMealDate).getDay();
-				console.log(mealDay);
+				const mealDay = new Date(currentMealDate).getDay() - 1;
 				const mealInfo = data.DDISH_NM.replace(firstRegex, "").replace(
 					secondRegex,
 					"\n"
 				);
 
 				if (mealCode === "1") {
-					setBreakfast((breakfast) => [...breakfast, mealInfo]);
+					breakfast[mealDay] = mealInfo;
+					setBreakfast(breakfast);
 				} else if (mealCode === "2") {
-					setLunch((lunch) => [...lunch, mealInfo]);
+					lunch[mealDay] = mealInfo;
+					setLunch(lunch);
 				} else {
-					setDinner((dinner) => [...dinner, mealInfo]);
+					dinner[mealDay] = mealInfo;
+					setDinner(dinner);
 				}
 			}
 		});
 	};
 
 	useEffect(() => {
-		setBreakfast([]);
-		setLunch([]);
-		setDinner([]);
+		breakfast = [];
+		lunch = [];
+		dinner = [];
 		getMonthlyMealsApi();
 	}, [count]);
 
