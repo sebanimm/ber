@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Column = styled.div`
 	width: 17%;
-	height: 65vh;
+	height: 70vh;
 	color: white;
 	text-align: center;
 	display: flex;

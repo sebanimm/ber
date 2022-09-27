@@ -6,67 +6,72 @@ import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Table from "../styles/Table";
 import Column from "../styles/Column";
-import Box from "../styles/Box";
-import MealTime from "../styles/MealTime";
-import MealInfo from "../styles/MealInfo";
 import Stepper from "../styles/Stepper";
 import TodaysDate from "../styles/TodaysDate";
 import Dates from "../styles/Dates";
 import Days from "../styles/Days";
-
-const VerticalLine = styled.div`
-	border: 2px solid white;
-	width: 0;
-	height: 430px;
-	border-radius: 5px;
-	top: 50%;
-	background-color: white;
-`;
-
-const HorizontalLine = styled(VerticalLine)`
-	height: 0;
-	width: 73vw;
-	top: 50%;
-	left: 50%;
-	transform: translate(-41.18%);
-`;
+import Box from "../styles/Box";
+import MealTime from "../styles/MealTime";
+import MealInfo from "../styles/MealInfo";
+import VerticalLine from "../styles/VerticalLine";
+import HorizontalLine from "../styles/HorizontalLine";
+import Day from "../styles/Day";
 
 const MealTable = ({ year, month }) => {
 	const [count, setCount] = useState(1);
 
 	const decreaseCount = () => {
 		setCount(count - 1);
+		setFirstDay(firstDay - 7);
 	};
 
 	const increaseCount = () => {
 		setCount(count + 1);
+		setFirstDay(firstDay + 7);
 	};
 
-	const [monthlyBreakfast, setMonthlyBreakfast] = useState("");
-	const [monthlyLunch, setMonthlyLunch] = useState("");
-	const [monthlyDinner, setMonthlyDinner] = useState("");
 	const firstDate = new Date(year, month - 1, 1);
 	const lastDay = new Date(year, month, 0).getDate();
 	const monthSWeek = firstDate.getDay();
 	const weekCount = parseInt((lastDay + monthSWeek - 1) / 7) + 1;
 
-	const currentDate = new Date();
-	const currentDay = currentDate.getDate();
-	const thisWeek = [];
+	const getMondayDate = (date) => {
+		const paramDate = new Date(date);
+		const day = paramDate.getDay();
+		const diff = paramDate.getDate() - day + (day === 0 ? -6 : 1);
+		return diff;
+	};
+
+	const [firstDay, setFirstDay] = useState(1);
+	const currentWeek = [];
+	const months = [];
+	const days = [];
+	const date = new Date(year, month - 1, firstDay);
+	const currentDate = getMondayDate(date);
+
+	const getDays = [];
 
 	for (let i = 1; i < 6; i++) {
-		const date = new Date(year, month - 1, currentDay - 1 + i);
-		const day = String(date.getDate()).padStart(2, "0");
-		thisWeek[i - 1] = `${year}${month.padStart(2, "0")}${day}`;
+		const date = new Date(year, month - 1, currentDate - 1 + i);
+		const day = date.getDay();
+		if (day >= 1 && day <= 5) {
+			getDays[day] = date;
+		}
+		const currentYear = date.getFullYear();
+		months[i - 1] = String(date.getMonth() + 1);
+		const currentMonth = months[i - 1].padStart(2, "0");
+		days[i - 1] = String(date.getDate());
+		const currentDay = days[i - 1].padStart(2, "0");
+		currentWeek[i - 1] = `${currentYear}${currentMonth}${currentDay}`;
 	}
 
-	const mealDates = [];
-	const breakfasts = [];
-	const lunches = [];
-	const dinners = [];
+	const [breakfast, setBreakfast] = useState([]);
+	const [lunch, setLunch] = useState([]);
+	const [dinner, setDinner] = useState([]);
+
 	const getMonthlyMealsApi = () => {
 		const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
-		const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_FROM_YMD=${thisWeek[0]}&MLSV_TO_YMD=${thisWeek[4]}`;
+		const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_FROM_YMD=${currentWeek[0]}&MLSV_TO_YMD=${currentWeek[4]}`;
 		const firstRegex = /<br\/>|\(([^(]+\d{0,15})\)|\([\S]+[^\s]/g;
 		const secondRegex = /\s{2}/g;
 		axios.get(URL).then((res) => {
@@ -74,38 +79,38 @@ const MealTable = ({ year, month }) => {
 			for (let data of datas) {
 				const mealCode = data.MMEAL_SC_CODE;
 				const mealDate = data.MLSV_YMD;
+				const mealDateYear = mealDate.substring(0, 4);
+				const mealDateMonth = mealDate.substring(4, 6);
+				const mealDateDay = mealDate.substring(6, 8);
+				const currentMealDate = `${mealDateYear}-${mealDateMonth}-${mealDateDay}`;
+				const mealDay = new Date(currentMealDate).getDay();
+				console.log(mealDay);
 				const mealInfo = data.DDISH_NM.replace(firstRegex, "").replace(
 					secondRegex,
 					"\n"
 				);
 
-				let dateIndex = mealDates.indexOf(mealDate);
-
-				if (dateIndex === -1) {
-					mealDates.push(mealDate);
-				}
-
-				dateIndex = mealDates.indexOf(mealDate);
 				if (mealCode === "1") {
-					breakfasts[dateIndex] = mealInfo;
+					setBreakfast((breakfast) => [...breakfast, mealInfo]);
 				} else if (mealCode === "2") {
-					lunches[dateIndex] = mealInfo;
+					setLunch((lunch) => [...lunch, mealInfo]);
 				} else {
-					dinners[dateIndex] = mealInfo;
+					setDinner((dinner) => [...dinner, mealInfo]);
 				}
 			}
 		});
 	};
 
 	useEffect(() => {
+		setBreakfast([]);
+		setLunch([]);
+		setDinner([]);
 		getMonthlyMealsApi();
-	}, []);
+	}, [count]);
 
 	return (
 		<Container>
-			<TodaysDate>
-				{year}년 {month}월 급식표
-			</TodaysDate>
+			<TodaysDate>이번 달 급식표</TodaysDate>
 			<Days>
 				<p>월</p>
 				<p>화</p>
@@ -114,11 +119,21 @@ const MealTable = ({ year, month }) => {
 				<p>금</p>
 			</Days>
 			<Dates>
-				<p>1</p>
-				<p>1</p>
-				<p>1</p>
-				<p>1</p>
-				<p>1</p>
+				<Day>
+					{months[0]}월 {days[0]}일
+				</Day>
+				<Day>
+					{months[1]}월 {days[1]}일
+				</Day>
+				<Day>
+					{months[2]}월 {days[2]}일
+				</Day>
+				<Day>
+					{months[3]}월 {days[3]}일
+				</Day>
+				<Day>
+					{months[4]}월 {days[4]}일
+				</Day>
 			</Dates>
 			<div style={{ position: "relative" }}>
 				<Stepper>
@@ -138,77 +153,77 @@ const MealTable = ({ year, month }) => {
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>{monthlyBreakfast}</MealInfo>
+							<MealInfo>{breakfast[0]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>{monthlyLunch}</MealInfo>
+							<MealInfo>{lunch[0]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>{monthlyDinner}</MealInfo>
+							<MealInfo>{dinner[0]}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>{breakfasts[1]}</MealInfo>
+							<MealInfo>{breakfast[1]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>{lunches[1]}</MealInfo>
+							<MealInfo>{lunch[1]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>{dinners[1]}</MealInfo>
+							<MealInfo>{dinner[1]}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>{breakfasts[2]}</MealInfo>
+							<MealInfo>{breakfast[2]}</MealInfo>
 							<HorizontalLine />
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>{lunches[2]}</MealInfo>
+							<MealInfo>{lunch[2]}</MealInfo>
 							<HorizontalLine />
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>{dinners[2]}</MealInfo>
+							<MealInfo>{dinner[2]}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>{breakfasts[3]}</MealInfo>
+							<MealInfo>{breakfast[3]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>{lunches[3]}</MealInfo>
+							<MealInfo>{lunch[3]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>{dinners[3]}</MealInfo>
+							<MealInfo>{dinner[3]}</MealInfo>
 						</Box>
 					</Column>
 					<VerticalLine />
 					<Column>
 						<Box>
 							<MealTime>아침</MealTime>
-							<MealInfo>{breakfasts[4]}</MealInfo>
+							<MealInfo>{breakfast[4]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>점심</MealTime>
-							<MealInfo>{lunches[4]}</MealInfo>
+							<MealInfo>{lunch[4]}</MealInfo>
 						</Box>
 						<Box>
 							<MealTime>저녁</MealTime>
-							<MealInfo>{dinners[4]}</MealInfo>
+							<MealInfo>{dinner[4]}</MealInfo>
 						</Box>
 					</Column>
 				</Table>
