@@ -136,7 +136,7 @@ const MealTable = ({ year, month }) => {
 					<DecreaseBtn onClick={decreaseCount} count={count}>
 						<FontAwesomeIcon icon={faArrowUp} style={{ color: "#FFF" }} />
 					</DecreaseBtn>
-					<p>{count}주차</p>
+					<p style={{ fontFamily: "nanum" }}>{count}주차</p>
 					<IncreaseBtn
 						onClick={increaseCount}
 						count={count}

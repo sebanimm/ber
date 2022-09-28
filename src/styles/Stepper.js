@@ -10,7 +10,7 @@ const Stepper = styled.div`
 	justify-content: space-between;
 	top: 50%;
 	left: 10%;
-	transform: translate(-175%, -50%);
+	transform: translate(-50%, -50%);
 `;
 
 export default Stepper;

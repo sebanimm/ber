@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const Table = styled.div`
-	width: 76vw;
+	width: 900px;
 	min-height: 500px;
 	display: flex;
-	margin: 0 12vw;
+	margin: 0 auto;
 	flex-wrap: wrap;
 	background-color: black;
 	justify-content: space-evenly;

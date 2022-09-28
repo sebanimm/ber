@@ -8,7 +8,6 @@ const MealInfo = styled(MealInfoMain)`
 	display: block;
 	bottom: 0;
 	position: relative;
-	display: flex;
 `;
 
 export default MealInfo;
