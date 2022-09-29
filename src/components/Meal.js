@@ -44,7 +44,7 @@ const Meal = ({ id, date }) => {
 				const MealCal = data[typeOfMeal].CAL_INFO;
 				setMealCalInfo(MealCal);
 
-				if (parseInt(MealCal) >= 800) {
+				if (parseInt(MealCal) >= 850) {
 					MealTaste = "~/맛있음/";
 					taste = true;
 				} else {

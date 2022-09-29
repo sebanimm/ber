@@ -8,7 +8,6 @@ import Table from "../styles/Table";
 import Column from "../styles/Column";
 import Stepper from "../styles/Stepper";
 import TodaysDate from "../styles/TodaysDate";
-import Dates from "../styles/Dates";
 import Days from "../styles/Days";
 import Box from "../styles/Box";
 import MealTime from "../styles/MealTime";
@@ -16,6 +15,7 @@ import MealInfo from "../styles/MealInfo";
 import VerticalLine from "../styles/VerticalLine";
 import HorizontalLine from "../styles/HorizontalLine";
 import Day from "../styles/Day";
+import Dates from "../styles/Dates";
 
 const MealTable = ({ year, month }) => {
 	const [count, setCount] = useState(1);
@@ -98,45 +98,65 @@ const MealTable = ({ year, month }) => {
 	};
 
 	useEffect(() => {
-		breakfast = [];
-		lunch = [];
-		dinner = [];
+		breakfast = [
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+		];
+		lunch = [
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+		];
+		dinner = [
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+			"급식 정보 없음",
+		];
 		getMonthlyMealsApi();
 	}, [count]);
 
 	return (
 		<Container>
-			<TodaysDate>이번 달 급식표</TodaysDate>
-			<Days>
-				<p>월</p>
-				<p>화</p>
-				<p>수</p>
-				<p>목</p>
-				<p>금</p>
-			</Days>
+			<TodaysDate>Monthly Meal</TodaysDate>
 			<Dates>
-				<Day>
-					{months[0]}월 {days[0]}일
-				</Day>
-				<Day>
-					{months[1]}월 {days[1]}일
-				</Day>
-				<Day>
-					{months[2]}월 {days[2]}일
-				</Day>
-				<Day>
-					{months[3]}월 {days[3]}일
-				</Day>
-				<Day>
-					{months[4]}월 {days[4]}일
-				</Day>
+				<p style={{ width: "100px", textAlign: "center" }}>Mon</p>
+				<p style={{ width: "100px", textAlign: "center" }}>Tue</p>
+				<p style={{ width: "100px", textAlign: "center" }}>Wed</p>
+				<p style={{ width: "100px", textAlign: "center" }}>Thu</p>
+				<p style={{ width: "100px", textAlign: "center" }}>Fri</p>
 			</Dates>
+			<Days>
+				<Day>
+					{months[0]}/{days[0]}
+				</Day>
+				<Day>
+					{months[1]}/{days[1]}
+				</Day>
+				<Day>
+					{months[2]}/{days[2]}
+				</Day>
+				<Day>
+					{months[3]}/{days[3]}
+				</Day>
+				<Day>
+					{months[4]}/{days[4]}
+				</Day>
+			</Days>
 			<div style={{ position: "relative" }}>
 				<Stepper>
 					<DecreaseBtn onClick={decreaseCount} count={count}>
 						<FontAwesomeIcon icon={faArrowUp} style={{ color: "#FFF" }} />
 					</DecreaseBtn>
-					<p style={{ fontFamily: "nanum" }}>{count}주차</p>
+					<p style={{ fontFamily: "GothicA1-Light", color: "#98ADC7" }}>
+						{count}주차
+					</p>
 					<IncreaseBtn
 						onClick={increaseCount}
 						count={count}
@@ -234,15 +254,15 @@ const IncreaseBtn = styled.button`
 	height: 50px;
 	border-radius: 50%;
 	font-size: 26px;
-	background-color: black;
+	background-color: #98adc7;
 	color: white;
 	align-items: center;
 	justify-content: center;
 	background: ${(props) =>
-		props.count === props.weekCount ? "none" : "black"};
-	border: ${(props) => (props.count === props.weekCount ? "none" : "black")};
+		props.count === props.weekCount ? "none" : "#98ADC7"};
+	border: ${(props) => (props.count === props.weekCount ? "none" : "#98ADC7")};
 	pointer-events: ${(props) =>
-		props.count === props.weekCount ? "none" : "black"};
+		props.count === props.weekCount ? "none" : "#98ADC7"};
 `;
 
 const DecreaseBtn = styled.button`
@@ -251,13 +271,13 @@ const DecreaseBtn = styled.button`
 	height: 50px;
 	border-radius: 50%;
 	font-size: 26px;
-	background-color: black;
+	background-color: #98adc7;
 	color: white;
 	align-items: center;
 	justify-content: center;
-	background: ${(props) => (props.count === 1 ? "none" : "black")};
-	border: ${(props) => (props.count === 1 ? "none" : "black")};
-	pointer-events: ${(props) => (props.count === 1 ? "none" : "black")};
+	background: ${(props) => (props.count === 1 ? "none" : "#98ADC7")};
+	border: ${(props) => (props.count === 1 ? "none" : "#98ADC7")};
+	pointer-events: ${(props) => (props.count === 1 ? "none" : "#98ADC7")};
 `;
 
 export default MealTable;

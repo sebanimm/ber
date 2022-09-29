@@ -6,7 +6,7 @@ const Table = styled.div`
 	display: flex;
 	margin: 0 auto;
 	flex-wrap: wrap;
-	background-color: black;
+	background-color: #98adc7;
 	justify-content: space-evenly;
 	align-items: center;
 	border-radius: 50px;
