@@ -19,21 +19,32 @@ import Dates from "../styles/Dates";
 
 const MealTable = ({ year, month }) => {
 	const [count, setCount] = useState(1);
+	const [firstDay, setFirstDay] = useState(1);
 
 	const decreaseCount = () => {
 		setCount(count - 1);
 		setFirstDay(firstDay - 7);
+		if (count !== 2) {
+			setFirstDay(firstDay - 7);
+		} else {
+			setFirstDay(1);
+		}
 	};
 
 	const increaseCount = () => {
 		setCount(count + 1);
-		setFirstDay(firstDay + 7);
+		if (count !== 5) {
+			setFirstDay(firstDay + 7);
+		} else {
+			const a = firstDay - lastDayOfMonth;
+			setFirstDay(firstDay - a);
+		}
 	};
 
-	const firstDate = new Date(year, month - 1, 1);
-	const lastDay = new Date(year, month, 0).getDate();
-	const monthSWeek = firstDate.getDay();
-	const weekCount = parseInt((lastDay + monthSWeek - 1) / 7) + 1;
+	const firstDateOfMonth = new Date(year, month - 1, 1);
+	const lastDayOfMonth = new Date(year, month, 0).getDate();
+	const monthSWeek = firstDateOfMonth.getDay();
+	const weekCount = parseInt((lastDayOfMonth + monthSWeek - 1) / 7) + 1;
 
 	const getMondayDate = (date) => {
 		const paramDate = new Date(date);
@@ -42,12 +53,11 @@ const MealTable = ({ year, month }) => {
 		return diff;
 	};
 
-	const [firstDay, setFirstDay] = useState(1);
 	const currentWeek = [];
 	const months = [];
 	const days = [];
-	const date = new Date(year, month - 1, firstDay);
-	const currentDate = getMondayDate(date);
+	const firstDate = new Date(year, month - 1, firstDay);
+	const currentDate = getMondayDate(firstDate);
 
 	for (let i = 1; i < 6; i++) {
 		const date = new Date(year, month - 1, currentDate - 1 + i);
@@ -57,6 +67,7 @@ const MealTable = ({ year, month }) => {
 		days[i - 1] = String(date.getDate());
 		const currentDay = days[i - 1].padStart(2, "0");
 		currentWeek[i - 1] = `${currentYear}${currentMonth}${currentDay}`;
+		console.log(currentWeek[i - 1]);
 	}
 
 	let [breakfast, setBreakfast] = useState([]);
@@ -152,7 +163,14 @@ const MealTable = ({ year, month }) => {
 			<div style={{ position: "relative" }}>
 				<Stepper>
 					<DecreaseBtn onClick={decreaseCount} count={count}>
-						<FontAwesomeIcon icon={faArrowUp} style={{ color: "#FFF" }} />
+						<FontAwesomeIcon
+							icon={faArrowUp}
+							count={count}
+							style={{
+								color: "#FFF",
+								display: count === 1 ? "none" : "block",
+							}}
+						/>
 					</DecreaseBtn>
 					<p style={{ fontFamily: "GothicA1-Light", color: "#98ADC7" }}>
 						{count}주차
@@ -162,7 +180,13 @@ const MealTable = ({ year, month }) => {
 						count={count}
 						weekCount={weekCount}
 					>
-						<FontAwesomeIcon icon={faArrowDown} style={{ color: "#FFF" }} />
+						<FontAwesomeIcon
+							icon={faArrowDown}
+							style={{
+								color: "#FFF",
+								display: count === weekCount ? "none" : "block",
+							}}
+						/>
 					</IncreaseBtn>
 				</Stepper>
 				<Table>

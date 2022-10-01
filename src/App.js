@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./routes/Main";
 import MonthlyMealInfo from "./routes/MonthlyMealInfo";
+import Schedules from "./routes/Schedules";
 
 const App = () => {
 	const date = new Date();
@@ -28,8 +29,12 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/monthlyMeal/:currenMonth"
+					path="/monthlyMeal/:currentMonth"
 					element={<MonthlyMealInfo year={year} month={month} />}
+				/>
+				<Route
+					path="/schedules/:currentMonth"
+					element={<Schedules currentMonth={currentMonth} />}
 				/>
 			</Routes>
 		</Router>

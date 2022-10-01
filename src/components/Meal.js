@@ -8,22 +8,12 @@ import SecondCircle from "../styles/SecondCircle.js";
 import ThirdCircle from "../styles/ThirdCircle.js";
 import styled from "styled-components";
 
-const MealWrapper = styled.div`
-	width: 300px;
-	height: 300px;
-	background: ${(props) => (props.isTasty ? "#6D839E" : "#000000")};
-	box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.4);
-	border-radius: 10px;
-	position: relative;
-	text-align: center;
-`;
-
-let taste;
+let tasty;
 
 const Meal = ({ id, date }) => {
-	const [MealInfo, setMealInfo] = useState("급식 정보가 없습니다.");
-	const [MealCalInfo, setMealCalInfo] = useState("");
-	let [MealTaste, setMealTaste] = useState("");
+	const [mealInfo, setMealInfo] = useState("급식 정보가 없습니다.");
+	const [mealCalInfo, setMealCalInfo] = useState("");
+	const [mealTaste, setMealTaste] = useState("");
 
 	const getMealApi = () => {
 		const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
@@ -35,24 +25,24 @@ const Meal = ({ id, date }) => {
 			const data = res.data.mealServiceDietInfo[1].row;
 
 			const getMealInfo = (typeOfMeal) => {
-				const Meal = data[typeOfMeal].DDISH_NM.replace(firstRegex, "").replace(
+				const meal = data[typeOfMeal].DDISH_NM.replace(firstRegex, "").replace(
 					secondRegex,
 					"\n"
 				);
-				setMealInfo(Meal);
+				setMealInfo(meal);
 
-				const MealCal = data[typeOfMeal].CAL_INFO;
-				setMealCalInfo(MealCal);
+				const mealCal = data[typeOfMeal].CAL_INFO;
+				setMealCalInfo(mealCal);
 
-				if (parseInt(MealCal) >= 850) {
-					MealTaste = "~/맛있음/";
-					taste = true;
+				if (parseInt(mealCal) >= 850) {
+					setMealTaste("~/맛있음/");
+					tasty = true;
 				} else {
-					MealTaste = "~/평균/";
-					taste = false;
+					setMealTaste("~/평균/");
+					tasty = false;
 				}
 
-				setMealTaste(MealTaste);
+				setMealTaste(mealTaste);
 			};
 
 			getMealInfo(id);
@@ -66,19 +56,29 @@ const Meal = ({ id, date }) => {
 	}, [nowUrl]);
 
 	return (
-		<MealWrapper isTasty={taste === true ? true : false}>
+		<MealWrapper isTasty={tasty === true ? true : false}>
 			<MealHeader>
 				<FirstCircle />
 				<SecondCircle />
 				<ThirdCircle />
 				<CalInfo>
-					{MealTaste}
-					{MealCalInfo}
+					{mealTaste}
+					{mealCalInfo}
 				</CalInfo>
 			</MealHeader>
-			<MealInfoMain>{MealInfo}</MealInfoMain>
+			<MealInfoMain>{mealInfo}</MealInfoMain>
 		</MealWrapper>
 	);
 };
+
+const MealWrapper = styled.div`
+	width: 300px;
+	height: 300px;
+	background: ${(props) => (props.isTasty ? "#6D839E" : "#000000")};
+	box-shadow: 0px 4px 10px 4px rgba(0, 0, 0, 0.4);
+	border-radius: 10px;
+	position: relative;
+	text-align: center;
+`;
 
 export default Meal;
