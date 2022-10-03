@@ -74,7 +74,7 @@ const MealTable = ({ year, month }) => {
 	let [lunch, setLunch] = useState([]);
 	let [dinner, setDinner] = useState([]);
 
-	const getMonthlyMealsApi = () => {
+	const getMonthlyMeals = () => {
 		const KEY = "3945dd1428d94d0cb836e00bd0a5480d";
 		const URL = `https://open.neis.go.kr/hub/mealServiceDietInfo?Key=${KEY}&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&MLSV_FROM_YMD=${currentWeek[0]}&MLSV_TO_YMD=${currentWeek[4]}`;
 		const firstRegex = /<br\/>|\(([^(]+\d{0,15})\)|\([\S]+[^\s]/g;
@@ -130,7 +130,7 @@ const MealTable = ({ year, month }) => {
 			"급식 정보 없음",
 			"급식 정보 없음",
 		];
-		getMonthlyMealsApi();
+		getMonthlyMeals();
 	}, [count]);
 
 	return (
