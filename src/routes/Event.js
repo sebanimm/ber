@@ -4,24 +4,25 @@ import GlobalFonts from "../fonts/fonts.js";
 import EventInfo from "../components/EventInfo";
 import Container from "../styles/Container";
 import styled from "styled-components";
-import { faP, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Events = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	width: 1200px;
-	height: 600px;
+	width: 900px;
+	height: 450px;
 	margin: 0 auto;
 	justify-content: flex-start;
 `;
 
 const Month = styled.div`
-	padding: 15vh 0 12vh 0;
+	padding: 15vh 0 10vh 0;
+	height: 10vh;
 	text-align: center;
 	font-family: "GothicA1-Regular";
 	font-size: 60px;
-	min-width: 1200px;
+	min-width: 00px;
 `;
 
 const NextBtn = styled.div`
@@ -82,7 +83,7 @@ const Event = ({ year, currentMonth }) => {
 
 	useEffect(() => {
 		getEvents();
-	}, [setMonth]);
+	}, [month]);
 
 	return (
 		<Container>

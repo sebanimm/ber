@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 const EventWrapper = styled.div`
 	text-align: center;
-	width: 20%;
-	height: 30%;
-	margin: 2.5%;
+	width: 22%;
+	height: 34%;
+	margin: 1.5%;
 	padding: 1% 0 4% 0;
 	background-color: #e3ecf6;
 	border-radius: 35px;
@@ -14,10 +14,11 @@ const EventWrapper = styled.div`
 	flex-direction: column;
 	justify-content: space-evenly;
 	font-family: "GothicA1-Regular";
-	font-size: 30px;
+	font-size: 20px;
 `;
 
 const EventHeader = styled.div`
+	font-size: 30px;
 	width: 100%;
 	height: 20%;
 `;
