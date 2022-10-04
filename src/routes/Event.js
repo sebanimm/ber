@@ -32,10 +32,12 @@ const NextBtn = styled.div`
 	top: 50%;
 	right: 3%;
 	transform: translateY(-50%);
+	display: ${(props) => (props.count === 12 ? "none" : "block")};
 `;
 
 const PrevBtn = styled(NextBtn)`
 	left: 3%;
+	display: ${(props) => (props.count === 1 ? "none" : "block")};
 `;
 
 const Event = ({ year, currentMonth }) => {
@@ -90,22 +92,22 @@ const Event = ({ year, currentMonth }) => {
 			<GlobalFonts />
 			<Month>{month}월</Month>
 			<div style={{ position: "relative" }}>
-				<PrevBtn onClick={prevMonth}>
+				<PrevBtn onClick={prevMonth} count={month}>
 					<FontAwesomeIcon
 						icon={faPlay}
 						style={{ width: "100%", height: "100%", transform: "scaleX(-1)" }}
 					/>
 				</PrevBtn>
-				<NextBtn onClick={nextMonth}>
+				<NextBtn onClick={nextMonth} count={month}>
 					<FontAwesomeIcon
 						icon={faPlay}
 						style={{ width: "100%", height: "100%" }}
 					/>
 				</NextBtn>
 				<Events>
-					{events.map((event) => (
+					{events.map((event, index) => (
 						<EventInfo
-							key={event.date}
+							key={index}
 							name={event.name}
 							day={parseInt(event.date.substring(6, 8))}
 						/>

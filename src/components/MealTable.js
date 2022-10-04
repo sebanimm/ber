@@ -67,7 +67,6 @@ const MealTable = ({ year, month }) => {
 		days[i - 1] = String(date.getDate());
 		const currentDay = days[i - 1].padStart(2, "0");
 		currentWeek[i - 1] = `${currentYear}${currentMonth}${currentDay}`;
-		console.log(currentWeek[i - 1]);
 	}
 
 	let [breakfast, setBreakfast] = useState([]);

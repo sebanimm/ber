@@ -41,8 +41,6 @@ const Meal = ({ id, date }) => {
 					setMealTaste("~/평균/");
 					tasty = false;
 				}
-
-				setMealTaste(mealTaste);
 			};
 
 			getMealInfo(id);
