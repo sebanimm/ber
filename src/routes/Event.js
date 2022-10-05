@@ -1,55 +1,37 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
-import GlobalFonts from "../fonts/fonts.js";
-import EventInfo from "../components/EventInfo";
-import Container from "../styles/Container";
 import styled from "styled-components";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import GlobalFonts from "../fonts/fonts.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import Container from "../styles/Container";
+import EventInfo from "../components/EventInfo";
+import Month from "../styles/Month.js";
+import Events from "../styles/Events.js";
 
-const Events = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	width: 900px;
-	height: 450px;
-	margin: 0 auto;
-	justify-content: flex-start;
-`;
+let summerVacation = 0;
+let winterVacation = 0;
 
-const Month = styled.div`
-	padding: 15vh 0 10vh 0;
-	height: 10vh;
-	text-align: center;
-	font-family: "GothicA1-Regular";
-	font-size: 60px;
-	min-width: 00px;
-`;
-
-const NextBtn = styled.div`
-	width: 70px;
-	height: 70px;
-	position: absolute;
-	top: 50%;
-	right: 3%;
-	transform: translateY(-50%);
-	display: ${(props) => (props.count === 12 ? "none" : "block")};
-`;
-
-const PrevBtn = styled(NextBtn)`
-	left: 3%;
-	display: ${(props) => (props.count === 1 ? "none" : "block")};
-`;
-
-const Event = ({ year, currentMonth }) => {
+const Event = ({ currentYear, currentMonth }) => {
 	const [events, setEvents] = useState([]);
 	const [month, setMonth] = useState(parseInt(currentMonth));
+	const [year, setYear] = useState(parseInt(currentYear));
 
 	const nextMonth = () => {
 		setMonth(month + 1);
+		if (month >= 12) {
+			setYear(year + 1);
+			setMonth(1);
+		}
 	};
 
 	const prevMonth = () => {
+		summerVacation = 0;
 		setMonth(month - 1);
+		if (month === 1) {
+			setYear(parseInt(currentYear));
+			setMonth(12);
+		}
 	};
 
 	const event = [];
@@ -73,8 +55,8 @@ const Event = ({ year, currentMonth }) => {
 
 				if (eventDay >= 1 && eventDay <= 5) {
 					if (eventNames.indexOf(eventName) < 0) {
-						eventNames[i] = `${eventName}`;
 						event[i] = { name: `${eventName}`, date: `${eventDate}` };
+						eventNames[i] = `${eventName}`;
 					}
 					i += 1;
 				}
@@ -112,10 +94,38 @@ const Event = ({ year, currentMonth }) => {
 							day={parseInt(event.date.substring(6, 8))}
 						/>
 					))}
+					<EventStatus eventCount={events.length}>
+						학교 일정이 존재하지 않습니다.
+					</EventStatus>
 				</Events>
 			</div>
 		</Container>
 	);
 };
+
+const NextBtn = styled.div`
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	top: 50%;
+	right: 3%;
+	transform: translateY(-50%);
+	display: ${(props) => (props.count === 2 ? "none" : "block")};
+`;
+
+const PrevBtn = styled(NextBtn)`
+	left: 3%;
+	display: ${(props) => (props.count === 3 ? "none" : "block")};
+`;
+
+const EventStatus = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-size: 40px;
+	font-family: "GothicA1-Regular";
+	display: ${(props) => (props.eventCount !== 0 ? "none" : "block")};
+`;
 
 export default Event;

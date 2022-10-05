@@ -1,9 +1,9 @@
-import Container from "../styles/Container";
-import styled from "styled-components";
 import { React, useState, useEffect } from "react";
+import axios from "axios";
+import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import Container from "../styles/Container";
 import Table from "../styles/Table";
 import Column from "../styles/Column";
 import Stepper from "../styles/Stepper";
