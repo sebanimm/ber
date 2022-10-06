@@ -9,6 +9,9 @@ import EventInfo from "../components/EventInfo";
 import Month from "../styles/Month.js";
 import Events from "../styles/Events.js";
 
+let isSummerVacation = false;
+let isWinterVacation = false;
+
 const Event = ({ currentYear, currentMonth }) => {
 	const [events, setEvents] = useState([]);
 	const [month, setMonth] = useState(parseInt(currentMonth));
@@ -23,6 +26,8 @@ const Event = ({ currentYear, currentMonth }) => {
 	};
 
 	const prevMonth = () => {
+		isSummerVacation = false;
+		isWinterVacation = false;
 		setMonth(month - 1);
 		if (month === 1) {
 			setYear(parseInt(currentYear));
@@ -47,11 +52,28 @@ const Event = ({ currentYear, currentMonth }) => {
 				const eventDateMonth = eventDate.substring(4, 6);
 				const eventDateDay = eventDate.substring(6, 8);
 				const currentEventDate = `${eventDateYear}-${eventDateMonth}-${eventDateDay}`;
-				const eventDay = new Date(currentEventDate).getDay();
+				const week = ["일", "월", "화", "수", "목", "금", "토"];
+				const eventDay = week[new Date(currentEventDate).getDay()];
+				console.log(eventDay);
 
-				if (eventDay >= 1 && eventDay <= 5) {
+				if (eventName !== "토요휴업일") {
 					if (eventNames.indexOf(eventName) < 0) {
-						event[i] = { name: `${eventName}`, date: `${eventDate}` };
+						if (eventName === "여름방학") {
+							if (isSummerVacation === true) {
+								continue;
+							}
+							isSummerVacation = true;
+						} else if (eventName === "겨울방학") {
+							if (isWinterVacation === true) {
+								continue;
+							}
+							isWinterVacation = true;
+						}
+						event[i] = {
+							name: `${eventName}`,
+							date: `${eventDate}`,
+							day: `${eventDay}`,
+						};
 						eventNames[i] = `${eventName}`;
 					}
 					i += 1;
@@ -87,7 +109,8 @@ const Event = ({ currentYear, currentMonth }) => {
 						<EventInfo
 							key={index}
 							name={event.name}
-							day={parseInt(event.date.substring(6, 8))}
+							date={parseInt(event.date.substring(6, 8))}
+							day={event.day}
 						/>
 					))}
 					<EventStatus eventCount={events.length}>
@@ -100,17 +123,17 @@ const Event = ({ currentYear, currentMonth }) => {
 };
 
 const NextBtn = styled.div`
-	width: 70px;
-	height: 70px;
+	width: 30px;
+	height: 30px;
 	position: absolute;
 	top: 50%;
-	right: 3%;
+	right: 12%;
 	transform: translateY(-50%);
 	display: ${(props) => (props.count === 2 ? "none" : "block")};
 `;
 
 const PrevBtn = styled(NextBtn)`
-	left: 3%;
+	left: 12%;
 	display: ${(props) => (props.count === 3 ? "none" : "block")};
 `;
 
