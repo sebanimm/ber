@@ -9,9 +9,6 @@ import EventInfo from "../components/EventInfo";
 import Month from "../styles/Month.js";
 import Events from "../styles/Events.js";
 
-let summerVacation = 0;
-let winterVacation = 0;
-
 const Event = ({ currentYear, currentMonth }) => {
 	const [events, setEvents] = useState([]);
 	const [month, setMonth] = useState(parseInt(currentMonth));
@@ -26,7 +23,6 @@ const Event = ({ currentYear, currentMonth }) => {
 	};
 
 	const prevMonth = () => {
-		summerVacation = 0;
 		setMonth(month - 1);
 		if (month === 1) {
 			setYear(parseInt(currentYear));
