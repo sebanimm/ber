@@ -33,7 +33,7 @@ const App = () => {
 					element={<MonthlyMealInfo year={year} month={month} />}
 				/>
 				<Route
-					path="/events/:currentMonth"
+					path="/events/:year"
 					element={<Event currentYear={year} currentMonth={month} />}
 				/>
 			</Routes>
