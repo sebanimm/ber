@@ -8,9 +8,8 @@ import SecondCircle from "../styles/SecondCircle.js";
 import ThirdCircle from "../styles/ThirdCircle.js";
 import styled from "styled-components";
 
-let tasty;
-
 const Meal = ({ id, date }) => {
+	const [taste, setTaste] = useState();
 	const [mealInfo, setMealInfo] = useState("급식 정보가 없습니다.");
 	const [mealCalInfo, setMealCalInfo] = useState("");
 	const [mealTaste, setMealTaste] = useState("");
@@ -36,10 +35,10 @@ const Meal = ({ id, date }) => {
 
 				if (parseInt(mealCal) >= 850) {
 					setMealTaste("~/맛있음/");
-					tasty = true;
+					setTaste(true);
 				} else {
 					setMealTaste("~/평균/");
-					tasty = false;
+					setTaste(false);
 				}
 			};
 
@@ -54,7 +53,7 @@ const Meal = ({ id, date }) => {
 	}, [nowUrl]);
 
 	return (
-		<MealWrapper isTasty={tasty === true ? true : false}>
+		<MealWrapper isTasty={taste === true ? true : false}>
 			<MealHeader>
 				<FirstCircle />
 				<SecondCircle />

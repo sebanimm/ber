@@ -9,10 +9,9 @@ import EventInfo from "../components/EventInfo";
 import Month from "../styles/Month.js";
 import Events from "../styles/Events.js";
 
-let isSummerVacation = false;
-let isWinterVacation = false;
-
 const Event = ({ currentYear, currentMonth }) => {
+	const [summerVacation, setSummerVacation] = useState(false);
+	const [winterVacation, setWinterVacation] = useState(false);
 	const [events, setEvents] = useState([]);
 	const [month, setMonth] = useState(parseInt(currentMonth));
 	const [year, setYear] = useState(parseInt(currentYear));
@@ -26,8 +25,8 @@ const Event = ({ currentYear, currentMonth }) => {
 	};
 
 	const prevMonth = () => {
-		isSummerVacation = false;
-		isWinterVacation = false;
+		setSummerVacation(false);
+		setWinterVacation(false);
 		setMonth(month - 1);
 		if (month === 1) {
 			setYear(parseInt(currentYear));
@@ -59,15 +58,15 @@ const Event = ({ currentYear, currentMonth }) => {
 				if (eventName !== "토요휴업일") {
 					if (eventNames.indexOf(eventName) < 0) {
 						if (eventName === "여름방학") {
-							if (isSummerVacation === true) {
+							if (summerVacation === true) {
 								continue;
 							}
-							isSummerVacation = true;
+							setSummerVacation(true);
 						} else if (eventName === "겨울방학") {
-							if (isWinterVacation === true) {
+							if (winterVacation === true) {
 								continue;
 							}
-							isWinterVacation = true;
+							setWinterVacation(true);
 						}
 						event[i] = {
 							name: `${eventName}`,
