@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import GlobalFonts from "../fonts/fonts.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
 import Container from "../styles/Container";
 import VerticalLine from "../styles/VerticalLine";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpDown } from "@fortawesome/free-solid-svg-icons";
 
 const User = styled.div`
 	display: flex;
@@ -13,12 +15,14 @@ const User = styled.div`
 
 const UserProfile = styled.div`
 	height: 210px;
+	min-width: 1000px;
 	background: #98adc7;
 	box-shadow: 3px 4px 8px 3px rgba(0, 0, 0, 0.25);
 	border-radius: 40px;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
+	font-family: "GothicA1-Regular";
 `;
 
 const ProfileEditBtn = styled.div`
@@ -32,6 +36,7 @@ const ProfileEditBtn = styled.div`
 	align-items: center;
 	justify-content: center;
 	font-weight: bold;
+	font-family: "GothicA1-Light";
 `;
 
 const Posts = styled.div`
@@ -39,6 +44,7 @@ const Posts = styled.div`
 	justify-content: center;
 	align-items: center;
 	min-height: calc(100vh - 500px);
+	min-width: 1000px;
 	flex-direction: column;
 `;
 
@@ -54,6 +60,7 @@ const PostStatus = styled.div`
 	color: #505050;
 	width: fit-content;
 	margin: 0 auto;
+	font-family: "GothicA1-Light";
 `;
 
 const SortingBtn = styled(ProfileEditBtn)`
@@ -68,14 +75,16 @@ const Users = styled.div`
 	display: flex;
 `;
 
-const Interests = styled.div`
+const UserInterest = styled.div`
 	width: 30%;
+	display: flex;
+	flex-direction: column;
 `;
 
 const UserWrapper = styled.div`
 	display: flex;
-	width: 100%;
 	height: 80%;
+	width: 100%;
 	justify-content: space-evenly;
 `;
 
@@ -136,8 +145,8 @@ const UserInfo = styled.div`
 	align-items: center;
 `;
 
-const UserId = styled.div`
-	width: 30%;
+const UserName = styled.div`
+	max-width: 30%;
 	height: 100%;
 	font-size: 24px;
 	color: white;
@@ -146,7 +155,8 @@ const UserId = styled.div`
 	align-items: center;
 `;
 
-const UserName = styled(UserId)`
+const UserId = styled(UserName)`
+	max-width: 40%;
 	width: 40%;
 	height: 90%;
 	border-radius: 50px;
@@ -156,12 +166,40 @@ const UserName = styled(UserId)`
 	margin-left: 5%;
 `;
 
+const Icon = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-right: 10px;
+`;
+
+const Ment = styled.div`
+	height: 30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 18px;
+`;
+
+const Interests = styled.div`
+	height: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #565656;
+`;
+
 const Profile = () => {
+	const { userName } = useParams();
+
 	return (
 		<Container>
+			<GlobalFonts />
 			<Wrapper>
 				<User>
-					<ProfileEditBtn>프로필 편집</ProfileEditBtn>
+					<div style={{ minWidth: "1000px" }}>
+						<ProfileEditBtn>프로필 편집</ProfileEditBtn>
+					</div>
 					<div style={{ marginBottom: "10px" }} />
 					<UserProfile>
 						<UserWrapper>
@@ -172,27 +210,42 @@ const Profile = () => {
 								<UserUser>
 									<div style={{ marginBottom: "8%" }} />
 									<UserInfo>
-										<UserId>이하린</UserId>
-										<UserName>1학년 4반 14번</UserName>
+										<UserName>{userName}</UserName>
+										<UserId>1학년 4반 14번</UserId>
 									</UserInfo>
 									<div style={{ marginBottom: "5%" }} />
 									<StatusMessage>상태메세지를 입력해주세요!</StatusMessage>
-
-									<div style={{ marginBottom: "9%" }} />
+									<div style={{ marginBottom: "7%" }} />
 								</UserUser>
 							</Users>
 							<VerticalLine style={{ color: "white", height: "100%" }} />
-							<Interests />
+							<UserInterest>
+								<div style={{ marginBottom: "8%" }} />
+								<Ment>
+									<b>{userName}</b>님은 이런 것들에 관심이 있어요!
+								</Ment>
+								<div style={{ marginBottom: "5%" }} />
+								<Interests>나를 표현할 멋진 태그를 설정해보세요.</Interests>
+								<div style={{ marginBottom: "7%" }} />
+							</UserInterest>
 						</UserWrapper>
 					</UserProfile>
 				</User>
-				<SortingBtn>
-					<FontAwesomeIcon
-						icon={faUpDown}
-						style={{ marginRight: "5px", fontSize: "20px" }}
-					/>
-					좋아요순
-				</SortingBtn>
+				<div style={{ minWidth: "1000px" }}>
+					<SortingBtn>
+						<Icon>
+							<FontAwesomeIcon
+								icon={faPlay}
+								style={{ fontSize: "10px", transform: "rotate(270deg)" }}
+							/>
+							<FontAwesomeIcon
+								icon={faPlay}
+								style={{ fontSize: "10px", transform: "rotate(90deg)" }}
+							/>
+						</Icon>
+						좋아요순
+					</SortingBtn>
+				</div>
 				<Posts>
 					<PostStatus>
 						<p>게시글이 없네요.</p>
