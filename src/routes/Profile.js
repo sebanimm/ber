@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import GlobalFonts from "../fonts/fonts.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
+import "../styles/Profile.css";
+import GlobalFonts from "../fonts/fonts.js";
 import Container from "../styles/Container";
 import VerticalLine from "../styles/VerticalLine";
 
@@ -76,7 +77,7 @@ const Users = styled.div`
 `;
 
 const UserInterest = styled.div`
-	width: 30%;
+	width: 33%;
 	display: flex;
 	flex-direction: column;
 `;
@@ -88,21 +89,21 @@ const UserWrapper = styled.div`
 	justify-content: space-evenly;
 `;
 
-const UserImage = styled.div`
+const UserImageWrapper = styled.div`
 	width: 40%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 
-const Image = styled.div`
+const UserImage = styled.div`
 	width: 140px;
 	height: 140px;
 	background-color: #d9d9d9;
 	border-radius: 50%;
 `;
 
-const UserUser = styled.div`
+const UserInfoWrapper = styled.div`
 	width: 60%;
 	display: flex;
 	flex-direction: column;
@@ -120,6 +121,7 @@ const StatusMessage = styled.div`
 	color: #676767;
 	position: relative;
 	z-index: 1;
+	filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.25));
 	::after {
 		content: "";
 		position: absolute;
@@ -164,6 +166,7 @@ const UserId = styled(UserName)`
 	color: black;
 	background-color: white;
 	margin-left: 5%;
+	margin-right: 5%;
 `;
 
 const Icon = styled.div`
@@ -189,6 +192,16 @@ const Interests = styled.div`
 	color: #565656;
 `;
 
+const Image = styled.div`
+	height: 100%;
+	width: 12%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`;
+
+const Interest = styled.div``;
+
 const Profile = () => {
 	const { userName } = useParams();
 
@@ -204,21 +217,33 @@ const Profile = () => {
 					<UserProfile>
 						<UserWrapper>
 							<Users>
-								<UserImage>
-									<Image />
-								</UserImage>
-								<UserUser>
+								<UserImageWrapper>
+									<UserImage />
+								</UserImageWrapper>
+								<UserInfoWrapper>
 									<div style={{ marginBottom: "8%" }} />
 									<UserInfo>
 										<UserName>{userName}</UserName>
 										<UserId>1학년 4반 14번</UserId>
+										<Image>
+											<img src="/github.png" alt="github" />
+										</Image>
+										<Image>
+											<img src="/email.png" alt="email" />
+										</Image>
 									</UserInfo>
 									<div style={{ marginBottom: "5%" }} />
 									<StatusMessage>상태메세지를 입력해주세요!</StatusMessage>
 									<div style={{ marginBottom: "7%" }} />
-								</UserUser>
+								</UserInfoWrapper>
 							</Users>
-							<VerticalLine style={{ color: "white", height: "100%" }} />
+							<VerticalLine
+								style={{
+									border: "1.2px solid #e0e0e0",
+									backgroundColor: "#E0E0E0",
+									height: "100%",
+								}}
+							/>
 							<UserInterest>
 								<div style={{ marginBottom: "8%" }} />
 								<Ment>

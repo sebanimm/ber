@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Main from "./routes/Main";
 import MonthlyMealInfo from "./routes/MonthlyMealInfo";
 import Event from "./routes/Event";
+import ProfileEdit from "./routes/ProfileEdit";
 import Profile from "./routes/Profile";
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
 					element={<Event currentYear={year} currentMonth={month} />}
 				/>
 				<Route path="/profile/:userName" element={<Profile />} />
+				<Route path="/profileEdit/:userName" element={<ProfileEdit />} />
 			</Routes>
 		</Router>
 	);
