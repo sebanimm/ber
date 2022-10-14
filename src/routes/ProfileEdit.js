@@ -9,7 +9,7 @@ import "../styles/Profile.css";
 const EditWrapper = styled.div`
 	margin: 0 auto;
 	width: 1000px;
-	height: 600px;
+	height: 620px;
 	background-color: #d6dee9;
 	border-radius: 40px;
 	box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
@@ -27,7 +27,7 @@ const UserProfile = styled.div`
 `;
 
 const Edits = styled.div`
-	height: 55%;
+	height: 50%;
 	width: 80%;
 	display: flex;
 `;
@@ -42,6 +42,7 @@ const EditApplyBtn = styled.button`
 	font-size: 16px;
 	font-family: "GothicA1-Light";
 	cursor: pointer;
+	margin-bottom: 10px;
 `;
 
 const UserImage = styled.div`
@@ -114,8 +115,7 @@ const StatusMessageEdit = styled.div`
 `;
 
 const InfoEdit = styled(StatusMessageEdit)`
-	height: 45%;
-	margin-bottom: 5%;
+	height: 50%;
 `;
 
 const Head = styled.div`
@@ -166,10 +166,9 @@ const InterestInput = styled(GithubInput)`
 const InterestsList = styled.div`
 	background-color: #f0f0f0;
 	border-radius: 30px;
-	height: 46%;
-	width: 84%;
+	height: 47%;
+	width: 90%;
 	padding: 5% 5%;
-	margin-bottom: 5%;
 	display: flex;
 	justify-content: flex-start;
 	align-content: flex-start;
@@ -224,7 +223,7 @@ const ProfileEdit = () => {
 									<input
 										type="text"
 										placeholder="나를 표현할 멋진 문장을 적어보세요."
-										maxLength={20}
+										maxLength={30}
 									/>
 								</StatusMessageInput>
 							</StatusMessageEdit>
@@ -234,16 +233,16 @@ const ProfileEdit = () => {
 									<img src="/github.svg" alt="github" />
 									<input
 										type="url"
+										id="url"
 										placeholder="깃허브 링크를 입력해주세요."
-										maxLength="10"
 									/>
 								</GithubInput>
 								<EmailInput>
 									<img src="/email.svg" alt="email" />
 									<input
 										type="email"
+										id="email"
 										placeholder="이메일 주소를 입력해주세요."
-										maxLength="10"
 									/>
 								</EmailInput>
 							</InfoEdit>
