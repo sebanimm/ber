@@ -3,6 +3,7 @@ import Main from "./routes/Main";
 import MonthlyMealInfo from "./routes/MonthlyMealInfo";
 import Event from "./routes/Event";
 import ProfileEdit from "./routes/ProfileEdit";
+import Timetable from "./routes/Timetable";
 
 const App = () => {
 	const date = new Date();
@@ -38,6 +39,7 @@ const App = () => {
 					element={<Event currentYear={year} currentMonth={month} />}
 				/>
 				<Route path="/profileEdit/:userName" element={<ProfileEdit />} />
+				<Route path="/timetable" element={<Timetable />} />
 			</Routes>
 		</Router>
 	);

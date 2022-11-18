@@ -57,16 +57,16 @@ const MealTable = ({ year, month }) => {
 	const months = [];
 	const days = [];
 	const firstDate = new Date(year, month - 1, firstDay);
-	const currentDate = getMondayDate(firstDate);
+	const mondayOfTheFirstWeek = getMondayDate(firstDate);
 
-	for (let i = 1; i < 6; i++) {
-		const date = new Date(year, month - 1, currentDate - 1 + i);
+	for (let i = 0; i < 5; i++) {
+		const date = new Date(year, month - 1, mondayOfTheFirstWeek + i);
 		const currentYear = date.getFullYear();
-		months[i - 1] = String(date.getMonth() + 1);
-		const currentMonth = months[i - 1].padStart(2, "0");
-		days[i - 1] = String(date.getDate());
-		const currentDay = days[i - 1].padStart(2, "0");
-		currentWeek[i - 1] = `${currentYear}${currentMonth}${currentDay}`;
+		months[i] = String(date.getMonth() + 1);
+		const currentMonth = months[i].padStart(2, "0");
+		days[i] = String(date.getDate());
+		const currentDay = days[i].padStart(2, "0");
+		currentWeek[i] = `${currentYear}${currentMonth}${currentDay}`;
 	}
 
 	let [breakfast, setBreakfast] = useState([]);
@@ -92,7 +92,6 @@ const MealTable = ({ year, month }) => {
 					secondRegex,
 					"\n"
 				);
-
 				if (mealCode === "1") {
 					breakfast[mealDay] = mealInfo;
 					setBreakfast(breakfast);
