@@ -135,11 +135,11 @@ const MealTable = ({ year, month }) => {
 		<Container>
 			<TodaysDate>Monthly Meal</TodaysDate>
 			<Dates>
-				<p style={{ width: "100px", textAlign: "center" }}>Mon</p>
-				<p style={{ width: "100px", textAlign: "center" }}>Tue</p>
-				<p style={{ width: "100px", textAlign: "center" }}>Wed</p>
-				<p style={{ width: "100px", textAlign: "center" }}>Thu</p>
-				<p style={{ width: "100px", textAlign: "center" }}>Fri</p>
+				<p>Mon</p>
+				<p>Tue</p>
+				<p>Wed</p>
+				<p>Thu</p>
+				<p>Fri</p>
 			</Dates>
 			<Days>
 				<Day>
