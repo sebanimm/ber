@@ -53,7 +53,6 @@ const Event = ({ currentYear, currentMonth }) => {
 				const currentEventDate = `${eventDateYear}-${eventDateMonth}-${eventDateDay}`;
 				const week = ["일", "월", "화", "수", "목", "금", "토"];
 				const eventDay = week[new Date(currentEventDate).getDay()];
-				console.log(eventDay);
 
 				if (eventName !== "토요휴업일") {
 					if (eventNames.indexOf(eventName) < 0) {
