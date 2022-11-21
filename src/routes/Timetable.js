@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import ReactDropdown from "react-dropdown";
@@ -15,7 +15,18 @@ const A = styled.div`
 	margin-top: 20px;
 `;
 
-const B = styled.div``;
+const B = styled.div`
+	width: 100px;
+	height: 40px;
+	background-color: white;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 14px;
+	text-align: center;
+	white-space: pre-wrap;
+`;
 
 const TimetableWrapper = styled.div`
 	width: 1000px;
@@ -84,20 +95,35 @@ const Timetable = () => {
 	const [grade, setGrade] = useState(1);
 	const [className, setClassName] = useState(4);
 
-	const [a, b] = useState([]);
-	const KEY = `3945dd1428d94d0cb836e00bd0a5480d`;
-	const URL = `https://open.neis.go.kr/hub/hisTimetable?Key=${KEY}&Type=json&pIndex=1&pSize=300&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&GRADE=${grade}&CLASS_NM=${className}&TI_FROM_YMD=20221114&TI_TO_YMD=20221118`;
-	const regex = /(\[\S{0,3}\])/gi;
-	axios.get(URL).then((res) => {
-		const datas = res.data.hisTimetable[1].row;
-		for (let data of datas) {
-			const scheduleInfo = data.ITRT_CNTNT.replace(regex, "").replace(
-				"자율활동",
-				"동아리"
-			);
-			a.push(scheduleInfo);
-		}
-	});
+	const [datas, setDatas] = useState([]);
+	const getTimetableInfo = () => {
+		const firstRegex = /(\[\S{0,3}\])/gi;
+		const secondRegex = /([\s]+[\s])|[\s]/gi;
+		const thirdRegex = /\(|\)/gi;
+		const KEY = `3945dd1428d94d0cb836e00bd0a5480d`;
+		const URL = `https://open.neis.go.kr/hub/hisTimetable?Key=${KEY}&Type=json&pIndex=1&pSize=300&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&GRADE=${grade}&CLASS_NM=${className}&TI_FROM_YMD=20221114&TI_TO_YMD=20221118`;
+		axios.get(URL).then((res) => {
+			const datas = res.data.hisTimetable[1].row;
+			const x = [];
+			for (let data of datas) {
+				let timetableInfo = data.ITRT_CNTNT.replace(firstRegex, "")
+					.replace("자율활동", "CA")
+					.replace(thirdRegex, "");
+				if (grade > 1) {
+					timetableInfo = timetableInfo.replace("프로그래밍", "");
+				}
+				if (timetableInfo.length > 6) {
+					timetableInfo = timetableInfo.replace(secondRegex, "\n");
+				}
+				x.push(timetableInfo);
+			}
+			setDatas(x);
+		});
+	};
+
+	useEffect(() => {
+		getTimetableInfo();
+	}, []);
 
 	const options = [
 		{ value: "1-1", label: "1-1" },
@@ -142,8 +168,8 @@ const Timetable = () => {
 							<p>Fri</p>
 						</Dates>
 						<A>
-							{a.map((data) => (
-								<B>{data}</B>
+							{datas.map((data, index) => (
+								<B key={index}>{data}</B>
 							))}
 						</A>
 					</div>
