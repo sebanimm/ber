@@ -39,7 +39,10 @@ const App = () => {
 					element={<Event currentYear={year} currentMonth={month} />}
 				/>
 				<Route path="/profileEdit/:userName" element={<ProfileEdit />} />
-				<Route path="/timetable" element={<Timetable />} />
+				<Route
+					path="/timetable"
+					element={<Timetable year={year} month={month} />}
+				/>
 			</Routes>
 		</Router>
 	);
