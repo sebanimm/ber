@@ -94,8 +94,8 @@ const TimetableWrapper = styled.div`
 const Timetable = () => {
 	const [grade, setGrade] = useState(1);
 	const [className, setClassName] = useState(4);
-
 	const [datas, setDatas] = useState([]);
+
 	const getTimetableInfo = () => {
 		const firstRegex = /(\[\S{0,3}\])/gi;
 		const secondRegex = /([\s]+[\s])|[\s]/gi;
@@ -104,8 +104,17 @@ const Timetable = () => {
 		const URL = `https://open.neis.go.kr/hub/hisTimetable?Key=${KEY}&Type=json&pIndex=1&pSize=300&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&GRADE=${grade}&CLASS_NM=${className}&TI_FROM_YMD=20221114&TI_TO_YMD=20221118`;
 		axios.get(URL).then((res) => {
 			const datas = res.data.hisTimetable[1].row;
-			const x = [];
+			const monTimetable = [];
+			const tueTimetable = [];
+			const wedTimetable = [];
+			const thuTimetable = [];
+			const friTimetable = [];
 			for (let data of datas) {
+				const timetableYMD = data.ALL_TI_YMD;
+				const year = timetableYMD.substring(0, 4);
+				const month = timetableYMD.substring(4, 6);
+				const day = timetableYMD.substring(6, 8);
+				const a = `${year}-${month}-${day}`;
 				let timetableInfo = data.ITRT_CNTNT.replace(firstRegex, "")
 					.replace("자율활동", "CA")
 					.replace(thirdRegex, "");
@@ -115,9 +124,9 @@ const Timetable = () => {
 				if (timetableInfo.length > 6) {
 					timetableInfo = timetableInfo.replace(secondRegex, "\n");
 				}
-				x.push(timetableInfo);
+				monTimetable.push(timetableInfo);
 			}
-			setDatas(x);
+			setDatas(monTimetable);
 		});
 	};
 
