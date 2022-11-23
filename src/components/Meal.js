@@ -46,11 +46,9 @@ const Meal = ({ id, date }) => {
 		});
 	};
 
-	let nowUrl = window.location.pathname;
-
 	useEffect(() => {
 		getMealApi();
-	}, [nowUrl]);
+	});
 
 	return (
 		<MealWrapper isTasty={taste === true ? true : false}>

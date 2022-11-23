@@ -90,17 +90,10 @@ const Timetable = ({ year, month }) => {
 	const [grade, setGrade] = useState(1);
 	const [className, setClassName] = useState(1);
 	const [datas, setDatas] = useState([]);
-	const [selected, setSelected] = useState(`${grade}-${className}`);
 
-	const increaseGrade = () => {
-		if (grade !== 3) {
-			setGrade(grade + 1);
-		}
-	};
-	const increaseClass = () => {
-		if (className !== 4) {
-			setClassName(className + 1);
-		}
+	const getSelected = (grade, className) => {
+		setGrade(grade);
+		setClassName(className);
 	};
 
 	const getMondayDate = (date) => {
@@ -141,9 +134,10 @@ const Timetable = ({ year, month }) => {
 				const month = timetableYMD.substring(4, 6);
 				const day = timetableYMD.substring(6, 8);
 				const YMD = `${year}-${month}-${day}`;
-				let timetableInfo = data.ITRT_CNTNT.replace(firstRegex, "")
-					.replace("자율활동", "CA")
-					.replace(thirdRegex, "");
+				let timetableInfo = data.ITRT_CNTNT.replace(firstRegex, "").replace(
+					thirdRegex,
+					""
+				);
 				if (grade > 1) {
 					timetableInfo = timetableInfo.replace("프로그래밍", "");
 				}
@@ -240,7 +234,10 @@ const Timetable = ({ year, month }) => {
 					</div>
 				</div>
 				<div className="z">
-					<Dropdown selected={selected} setSelected={setSelected} />
+					<Dropdown
+						classInfo={`${grade}-${className}`}
+						getSelected={getSelected}
+					/>
 				</div>
 			</TimetableWrapper>
 		</Container>

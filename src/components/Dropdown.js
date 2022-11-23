@@ -36,8 +36,8 @@ const D = styled.div`
 	}
 
 	.dropdown .dropdown-content .dropdown-item {
-		padding: 10px 0;
 		width: 100%;
+		padding: 10px 0;
 		cursor: pointer;
 		transition: all 0.2s;
 		text-align: center;
@@ -49,22 +49,46 @@ const D = styled.div`
 	}
 `;
 
-const Dropdown = ({ selected, setSelected }) => {
+const Dropdown = ({ classInfo, getSelected }) => {
 	const [isActive, setIsActive] = useState(false);
-	const options = ["1-1", "1-2", "1-3", "1-4"];
+	const [selected, setSelected] = useState(classInfo);
+
+	const sendSelected = (option) => {
+		const grade = option[0];
+		const className = option[2];
+		getSelected(grade, className);
+	};
+
+	const options = [
+		"1-1",
+		"1-2",
+		"1-3",
+		"1-4",
+		"2-1",
+		"2-2",
+		"2-3",
+		"2-4",
+		// "3-1",
+		// "3-2",
+		// "3-3",
+		// "3-4",
+	];
+
 	return (
 		<D>
 			<div className="dropdown">
-				<div className="dropdown-btn" onClick={(e) => setIsActive(!isActive)}>
+				<div className="dropdown-btn" onClick={() => setIsActive(!isActive)}>
 					{selected}
 				</div>
 				{isActive && (
 					<div className="dropdown-content">
-						{options.map((option) => (
+						{options.map((option, index) => (
 							<div
-								onClick={(e) => {
-									setSelected(option);
+								key={index}
+								onClick={() => {
+									sendSelected(option);
 									setIsActive(false);
+									setSelected(option);
 								}}
 								className="dropdown-item"
 							>
