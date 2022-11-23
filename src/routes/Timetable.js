@@ -4,6 +4,7 @@ import axios from "axios";
 import Container from "../styles/Container";
 import GlobalFonts from "../fonts/fonts.js";
 import Dates from "../styles/Dates";
+import Dropdown from "../components/Dropdown";
 
 const A = styled.div`
 	padding: 15px;
@@ -53,7 +54,6 @@ const TimetableWrapper = styled.div`
 		height: 100vh;
 		width: 100px;
 		color: white;
-		margin-top: 50px;
 	}
 
 	.a {
@@ -70,6 +70,7 @@ const TimetableWrapper = styled.div`
 		font-size: 24px;
 		bottom: 0;
 		color: rgb(31, 61, 96);
+
 		p {
 			margin: auto 0;
 			font-family: "Ultra";
@@ -78,12 +79,29 @@ const TimetableWrapper = styled.div`
 			justify-content: center;
 		}
 	}
+
+	.g {
+		width: 85px;
+		text-align: center;
+	}
 `;
 
 const Timetable = ({ year, month }) => {
 	const [grade, setGrade] = useState(1);
 	const [className, setClassName] = useState(1);
 	const [datas, setDatas] = useState([]);
+	const [selected, setSelected] = useState(`${grade}-${className}`);
+
+	const increaseGrade = () => {
+		if (grade !== 3) {
+			setGrade(grade + 1);
+		}
+	};
+	const increaseClass = () => {
+		if (className !== 4) {
+			setClassName(className + 1);
+		}
+	};
 
 	const getMondayDate = (date) => {
 		const paramDate = new Date(date);
@@ -138,25 +156,9 @@ const Timetable = ({ year, month }) => {
 		});
 	};
 
-	const options = [
-		{ value: "1-1", label: "1-1" },
-		{ value: "1-2", label: "1-2" },
-		{ value: "1-3", label: "1-3" },
-		{ value: "1-4", label: "1-4" },
-		{ value: "2-1", label: "2-1" },
-		{ value: "2-2", label: "2-2" },
-		{ value: "2-3", label: "2-3" },
-		{ value: "2-4", label: "2-4" },
-		{ value: "3-1", label: "3-1" },
-		{ value: "3-2", label: "3-2" },
-		{ value: "3-3", label: "3-3" },
-		{ value: "3-4", label: "3-4" },
-	];
-	const defaultOption = options[grade * grade + className - 2];
-
 	useEffect(() => {
 		getTimetableInfo();
-	}, []);
+	}, [grade, className]);
 
 	return (
 		<Container>
@@ -176,13 +178,18 @@ const Timetable = ({ year, month }) => {
 					</div>
 					<div>
 						<Dates
-							style={{ width: "100%", fontSize: "30px", color: "#1F3D60" }}
+							style={{
+								width: "100%",
+								fontSize: "30px",
+								color: "#1F3D60",
+								justifyContent: "space-evenly",
+							}}
 						>
-							<p>Mon</p>
-							<p>Tue</p>
-							<p>Wed</p>
-							<p>Thu</p>
-							<p>Fri</p>
+							<p className="g">Mon</p>
+							<p className="g">Tue</p>
+							<p className="g">Wed</p>
+							<p className="g">Thu</p>
+							<p className="g">Fri</p>
 						</Dates>
 						<A>
 							<div className="v">
@@ -191,8 +198,8 @@ const Timetable = ({ year, month }) => {
 									.map((data, index) => (
 										<B key={index}>{data[0]}</B>
 									))}
-								<C>방과후</C>
-								<C>방과후</C>
+								<C>(방과후)</C>
+								<C>(방과후)</C>
 							</div>
 							<div className="v">
 								{datas
@@ -200,8 +207,8 @@ const Timetable = ({ year, month }) => {
 									.map((data, index) => (
 										<B key={index}>{data[0]}</B>
 									))}
-								<C>방과후</C>
-								<C>방과후</C>
+								<C>(방과후)</C>
+								<C>(방과후)</C>
 							</div>
 							<div className="v">
 								{datas
@@ -210,8 +217,8 @@ const Timetable = ({ year, month }) => {
 										<B key={index}>{data[0]}</B>
 									))}
 								<B>자습</B>
-								<C>방과후</C>
-								<C>방과후</C>
+								<C>(방과후)</C>
+								<C>(방과후)</C>
 							</div>
 							<div className="v">
 								{datas
@@ -219,8 +226,8 @@ const Timetable = ({ year, month }) => {
 									.map((data, index) => (
 										<B key={index}>{data[0]}</B>
 									))}
-								<C>방과후</C>
-								<C>방과후</C>
+								<C>(방과후)</C>
+								<C>(방과후)</C>
 							</div>
 							<div className="v">
 								{datas
@@ -232,7 +239,9 @@ const Timetable = ({ year, month }) => {
 						</A>
 					</div>
 				</div>
-				<div className="z"></div>
+				<div className="z">
+					<Dropdown selected={selected} setSelected={setSelected} />
+				</div>
 			</TimetableWrapper>
 		</Container>
 	);
