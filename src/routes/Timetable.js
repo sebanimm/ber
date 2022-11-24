@@ -1,90 +1,15 @@
 import { React, useEffect, useState } from "react";
-import styled from "styled-components";
 import axios from "axios";
-import Container from "../styles/Container";
 import GlobalFonts from "../fonts/fonts.js";
+import Container from "../styles/Container";
 import Dates from "../styles/Dates";
 import Dropdown from "../components/Dropdown";
-
-const A = styled.div`
-	padding: 15px;
-	width: 640px;
-	height: 470px;
-	background-color: #98adc7;
-	border-radius: 20px;
-	margin-top: 20px;
-	display: flex;
-	justify-content: space-evenly;
-
-	.v {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-`;
-
-const B = styled.div`
-	width: 100px;
-	height: 40px;
-	background-color: white;
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 14px;
-	text-align: center;
-	white-space: pre-wrap;
-	font-family: "GothicA1-Light";
-	margin: 6.1px;
-`;
-
-const C = styled(B)`
-	background: #d1d1d1;
-`;
-
-const TimetableWrapper = styled.div`
-	width: 1000px;
-	height: 100vh;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin: 0 auto;
-
-	.z {
-		height: 100vh;
-		width: 100px;
-		color: white;
-	}
-
-	.a {
-		display: flex;
-	}
-
-	.s {
-		margin-top: auto;
-		padding: 15px 0;
-		height: 470px;
-		width: 100px;
-		display: flex;
-		flex-direction: column;
-		font-size: 24px;
-		bottom: 0;
-		color: rgb(31, 61, 96);
-
-		p {
-			margin: auto 0;
-			font-family: "Ultra";
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-	}
-
-	.g {
-		width: 85px;
-		text-align: center;
-	}
-`;
+import {
+	TimetableWrapper,
+	ClassesTable,
+	Classes,
+	AfterClasses,
+} from "../styles/styles.js";
 
 const Timetable = ({ year, month }) => {
 	const [grade, setGrade] = useState(1);
@@ -237,61 +162,61 @@ const Timetable = ({ year, month }) => {
 							<p className="g">Thu</p>
 							<p className="g">Fri</p>
 						</Dates>
-						<A>
+						<ClassesTable>
 							<div className="v">
 								{datas
 									.filter((data) => data[1] === week[0])
 									.map((data, index) => (
-										<B key={index}>{data[0]}</B>
+										<Classes key={index}>{data[0]}</Classes>
 									))}
 								{afterClasses
 									.filter((data) => data[0] === classInfo && data[1] === "월")
 									.map((data, index) => (
-										<C key={index}>{data[2]}</C>
+										<AfterClasses key={index}>{data[2]}</AfterClasses>
 									))}
 							</div>
 							<div className="v">
 								{datas
 									.filter((data) => data[1] === week[1])
 									.map((data, index) => (
-										<B key={index}>{data[0]}</B>
+										<Classes key={index}>{data[0]}</Classes>
 									))}
 								{afterClasses
 									.filter((data) => data[0] === classInfo && data[1] === "화")
 									.map((data, index) => (
-										<C key={index}>{data[2]}</C>
+										<AfterClasses key={index}>{data[2]}</AfterClasses>
 									))}
 							</div>
 							<div className="v">
 								{datas
 									.filter((data) => data[1] === week[2])
 									.map((data, index) => (
-										<B key={index}>{data[0]}</B>
+										<Classes key={index}>{data[0]}</Classes>
 									))}
-								<B>자습</B>
+								<AfterClasses>자습</AfterClasses>
 								{afterClasses
 									.filter((data) => data[0] === classInfo && data[1] === "수")
 									.map((data, index) => (
-										<C key={index}>{data[2]}</C>
+										<AfterClasses key={index}>{data[2]}</AfterClasses>
 									))}
 							</div>
 							<div className="v">
 								{datas
 									.filter((data) => data[1] === week[3])
 									.map((data, index) => (
-										<B key={index}>{data[0]}</B>
+										<Classes key={index}>{data[0]}</Classes>
 									))}
-								<C>전공동아리</C>
-								<C>전공동아리</C>
+								<AfterClasses>전공동아리</AfterClasses>
+								<AfterClasses>전공동아리</AfterClasses>
 							</div>
 							<div className="v">
 								{datas
 									.filter((data) => data[1] === week[4])
 									.map((data, index) => (
-										<B key={index}>{data[0]}</B>
+										<Classes key={index}>{data[0]}</Classes>
 									))}
 							</div>
-						</A>
+						</ClassesTable>
 					</div>
 				</div>
 				<div className="z">

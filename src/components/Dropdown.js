@@ -1,53 +1,5 @@
 import { React, useState } from "react";
-import styled from "styled-components";
-
-const D = styled.div`
-	.dropdown {
-		width: 100px;
-		height: 40px;
-		margin-top: 60px;
-	}
-
-	.dropdown .dropdown-btn {
-		border-radius: 10px;
-		background: #6d839e;
-		height: 100%;
-		border: 1px solid #6d839e;
-		cursor: pointer;
-	}
-
-	.dropdown-btn,
-	.dropdown-content {
-		color: white;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 20px;
-		font-family: "Ultra";
-		border-radius: 10px;
-	}
-
-	.dropdown .dropdown-content {
-		position: absolute;
-		background: #6d839e;
-		flex-direction: column;
-		width: 100px;
-		z-index: 0;
-	}
-
-	.dropdown .dropdown-content .dropdown-item {
-		width: 100%;
-		padding: 10px 0;
-		cursor: pointer;
-		transition: all 0.2s;
-		text-align: center;
-		border-radius: 10px;
-	}
-
-	.dropdown .dropdown-content .dropdown-item:hover {
-		background: #98adc7;
-	}
-`;
+import { DropdownWrapper } from "../styles/styles";
 
 const Dropdown = ({ classInfo, getSelected }) => {
 	const [isActive, setIsActive] = useState(false);
@@ -75,7 +27,7 @@ const Dropdown = ({ classInfo, getSelected }) => {
 	];
 
 	return (
-		<D>
+		<DropdownWrapper>
 			<div className="dropdown">
 				<div className="dropdown-btn" onClick={() => setIsActive(!isActive)}>
 					{selected}
@@ -98,7 +50,7 @@ const Dropdown = ({ classInfo, getSelected }) => {
 					</div>
 				)}
 			</div>
-		</D>
+		</DropdownWrapper>
 	);
 };
 
