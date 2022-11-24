@@ -88,8 +88,60 @@ const TimetableWrapper = styled.div`
 
 const Timetable = ({ year, month }) => {
 	const [grade, setGrade] = useState(1);
-	const [className, setClassName] = useState(1);
+	const [className, setClassName] = useState(4);
 	const [datas, setDatas] = useState([]);
+	const classInfo = `${grade}-${className}`;
+
+	const afterClasses = [
+		["1-1", "월", "JAVA"],
+		["1-1", "월", "JAVA"],
+		["1-1", "화", "토익"],
+		["1-1", "화", "네트워크"],
+		["1-1", "수", "네트워크"],
+		["1-1", "수", "프로젝트"],
+		["1-2", "월", "JAVA"],
+		["1-2", "월", "JAVA"],
+		["1-2", "화", "토익"],
+		["1-2", "화", "네트워크"],
+		["1-2", "수", "네트워크"],
+		["1-2", "수", "프로젝트"],
+		["1-3", "월", "JAVA"],
+		["1-3", "월", "JAVA"],
+		["1-3", "화", "토익"],
+		["1-3", "화", "네트워크"],
+		["1-3", "수", "네트워크"],
+		["1-3", "수", "프로젝트"],
+		["1-4", "월", "JAVA"],
+		["1-4", "월", "JAVA"],
+		["1-4", "화", "토익"],
+		["1-4", "화", "네트워크"],
+		["1-4", "수", "네트워크"],
+		["1-4", "수", "프로젝트"],
+		["2-1", "월", "JAVA"],
+		["2-1", "월", "JAVA"],
+		["2-1", "화", "토익"],
+		["2-1", "화", "네트워크"],
+		["2-1", "수", "네트워크"],
+		["2-1", "수", "프로젝트"],
+		["2-2", "월", "JAVA"],
+		["2-2", "월", "JAVA"],
+		["2-2", "화", "토익"],
+		["2-2", "화", "네트워크"],
+		["2-2", "수", "네트워크"],
+		["2-2", "수", "프로젝트"],
+		["2-3", "월", "JAVA"],
+		["2-3", "월", "JAVA"],
+		["2-3", "화", "토익"],
+		["2-3", "화", "네트워크"],
+		["2-3", "수", "네트워크"],
+		["2-3", "수", "프로젝트"],
+		["2-4", "월", "JAVA"],
+		["2-4", "월", "JAVA"],
+		["2-4", "화", "토익"],
+		["2-4", "화", "네트워크"],
+		["2-4", "수", "네트워크"],
+		["2-4", "수", "프로젝트"],
+	];
 
 	const getSelected = (grade, className) => {
 		setGrade(grade);
@@ -121,8 +173,8 @@ const Timetable = ({ year, month }) => {
 
 	const getTimetableInfo = () => {
 		const firstRegex = /(\[\S{0,3}\])/gi;
-		const secondRegex = /([\s]+[\s])|[\s]/gi;
-		const thirdRegex = /\(|\)/gi;
+		const secondRegex = /\(|\)/gi;
+		const thirdRegex = /([\s]+[\s])|[\s]/gi;
 		const KEY = `3945dd1428d94d0cb836e00bd0a5480d`;
 		const URL = `https://open.neis.go.kr/hub/hisTimetable?Key=${KEY}&Type=json&pIndex=1&pSize=300&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150658&GRADE=${grade}&CLASS_NM=${className}&TI_FROM_YMD=${currentWeek[0]}&TI_TO_YMD=${currentWeek[4]}`;
 		axios.get(URL).then((res) => {
@@ -135,14 +187,14 @@ const Timetable = ({ year, month }) => {
 				const day = timetableYMD.substring(6, 8);
 				const YMD = `${year}-${month}-${day}`;
 				let timetableInfo = data.ITRT_CNTNT.replace(firstRegex, "").replace(
-					thirdRegex,
+					secondRegex,
 					""
 				);
 				if (grade > 1) {
 					timetableInfo = timetableInfo.replace("프로그래밍", "");
 				}
 				if (timetableInfo.length > 6) {
-					timetableInfo = timetableInfo.replace(secondRegex, "\n");
+					timetableInfo = timetableInfo.replace(thirdRegex, "\n");
 				}
 				x.push([timetableInfo, YMD]);
 			}
@@ -192,8 +244,11 @@ const Timetable = ({ year, month }) => {
 									.map((data, index) => (
 										<B key={index}>{data[0]}</B>
 									))}
-								<C>(방과후)</C>
-								<C>(방과후)</C>
+								{afterClasses
+									.filter((data) => data[0] === classInfo && data[1] === "월")
+									.map((data, index) => (
+										<C key={index}>{data[2]}</C>
+									))}
 							</div>
 							<div className="v">
 								{datas
@@ -201,8 +256,11 @@ const Timetable = ({ year, month }) => {
 									.map((data, index) => (
 										<B key={index}>{data[0]}</B>
 									))}
-								<C>(방과후)</C>
-								<C>(방과후)</C>
+								{afterClasses
+									.filter((data) => data[0] === classInfo && data[1] === "화")
+									.map((data, index) => (
+										<C key={index}>{data[2]}</C>
+									))}
 							</div>
 							<div className="v">
 								{datas
@@ -211,8 +269,11 @@ const Timetable = ({ year, month }) => {
 										<B key={index}>{data[0]}</B>
 									))}
 								<B>자습</B>
-								<C>(방과후)</C>
-								<C>(방과후)</C>
+								{afterClasses
+									.filter((data) => data[0] === classInfo && data[1] === "수")
+									.map((data, index) => (
+										<C key={index}>{data[2]}</C>
+									))}
 							</div>
 							<div className="v">
 								{datas
@@ -220,8 +281,8 @@ const Timetable = ({ year, month }) => {
 									.map((data, index) => (
 										<B key={index}>{data[0]}</B>
 									))}
-								<C>(방과후)</C>
-								<C>(방과후)</C>
+								<C>전공동아리</C>
+								<C>전공동아리</C>
 							</div>
 							<div className="v">
 								{datas
@@ -234,10 +295,7 @@ const Timetable = ({ year, month }) => {
 					</div>
 				</div>
 				<div className="z">
-					<Dropdown
-						classInfo={`${grade}-${className}`}
-						getSelected={getSelected}
-					/>
+					<Dropdown classInfo={classInfo} getSelected={getSelected} />
 				</div>
 			</TimetableWrapper>
 		</Container>
